@@ -11,7 +11,7 @@ FROM node:25.2-alpine AS runtime
 WORKDIR /app
 
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile --production
+RUN yarn install --frozen-lockfile --production && yarn cache clean
 COPY --from=builder /app/dist ./dist
 
 EXPOSE 3000

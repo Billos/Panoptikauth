@@ -1,5 +1,4 @@
-import stylisticJs from "@stylistic/eslint-plugin-js"
-import stylisticTs from "@stylistic/eslint-plugin-ts"
+import stylistic from "@stylistic/eslint-plugin"
 import typescriptPlugin from "@typescript-eslint/eslint-plugin"
 import parser from "@typescript-eslint/parser"
 
@@ -8,7 +7,7 @@ export default [
     languageOptions: { parser, parserOptions: { ecmaVersion: 2022, project: "./tsconfig.json" } },
     files: ["**/*.ts"],
     ignores: ["./src/types/**/*.ts", "./src/paypalTypes/**/*.ts"],
-    plugins: { "@typescript-eslint": typescriptPlugin, "@stylistic/js": stylisticJs, "@stylistic/ts": stylisticTs },
+    plugins: { "@typescript-eslint": typescriptPlugin, "@stylistic/js": stylistic, "@stylistic/ts": stylistic },
     settings: {
       "import/resolver": {
         node: {

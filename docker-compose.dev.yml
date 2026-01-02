@@ -1,9 +1,9 @@
 services:
-  authentik-gotify-bridge-dev:
+  authentik-gotify-bridge:
     build:
       context: .
-      dockerfile: Dockerfile.dev
-    container_name: authentik-gotify-bridge-dev
+      dockerfile: Dockerfile
+    command: ["dev"]
     restart: unless-stopped
     environment:
       - NODE_ENV=development
@@ -12,6 +12,4 @@ services:
       # - GOTIFY_URL=https://gotify.example.com
       # - GOTIFY_TOKEN=your-token-here
     volumes:
-      - ./src:/app/src
-      - ./tsconfig.json:/app/tsconfig.json
-      - /app/node_modules
+      - .:/app

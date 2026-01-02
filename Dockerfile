@@ -1,37 +1,22 @@
-# Build stage
-FROM node:20-alpine AS builder
+# Use an official Node.js runtime as a parent image
+FROM node:25.2-alpine AS builder
 
 WORKDIR /app
-
-# Copy package files
-COPY package.json yarn.lock ./
-
-# Install all dependencies (including devDependencies for building)
-RUN yarn install --frozen-lockfile
-
-# Copy source code
-COPY src ./src
-COPY tsconfig.json ./
-
-# Build the application
+COPY . .
+RUN yarn 
 RUN yarn build
 
-# Production stage
-FROM node:20-alpine
-
+# Final production image
+FROM node:25.2-alpine AS runtime
 WORKDIR /app
 
-# Copy package files
 COPY package.json yarn.lock ./
-
-# Install only production dependencies
 RUN yarn install --frozen-lockfile --production
-
-# Copy built application from builder stage
 COPY --from=builder /app/dist ./dist
 
-# Set environment to production
+EXPOSE 3000
+
 ENV NODE_ENV=production
 
-# Run the application
-CMD ["node", "dist/index.js"]
+ENTRYPOINT [ "npm", "run" ]
+CMD [ "start" ]

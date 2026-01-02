@@ -21,7 +21,7 @@ Run the application in development mode with automatic restart on file changes:
 npm run dev
 ```
 
-This will start the application with nodemon and ts-node, watching for changes in the `src` directory.
+This will start the application with tsx in watch mode, automatically restarting when changes are detected in the `src` directory.
 
 ## Building
 

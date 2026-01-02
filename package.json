@@ -15,6 +15,7 @@
     "build": "tsc",
     "clean": "rm -rf dist",
     "dev": "tsx watch src/index.ts",
+    "docker:build": "docker build --no-cache . -t billos/authentik-gotify-bridge:latest",
     "format": "prettier . --write",
     "format-check": "prettier . --check",
     "lint": "eslint src",

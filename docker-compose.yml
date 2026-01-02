@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   authentik-gotify-bridge:
+    # Note: This version will be automatically updated by semantic-release during releases
     image: authentik-gotify-bridge:0.0.1
     build:
       context: .

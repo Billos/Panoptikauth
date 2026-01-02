@@ -25,7 +25,7 @@ interface AuthentikNotification {
 }
 
 // Middleware to parse text/json content type
-app.use(express.text({ type: "text/json" }))
+app.use(express.json())
 
 // POST endpoint to receive Authentik notifications
 app.post("/webhook", async (req: Request, res: Response): Promise<void> => {

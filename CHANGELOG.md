@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/Billos/authentik-gotify-bridge/compare/1.0.0...1.0.1) (2026-01-02)
+
+
+### Bug Fixes
+
+* Replaces text/json middleware with json middleware ([c649309](https://github.com/Billos/authentik-gotify-bridge/commit/c649309f3760282da8bf14ac0f4c05b57797357e))
+
 # 1.0.0 (2026-01-02)
 
 

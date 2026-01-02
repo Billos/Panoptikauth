@@ -4,9 +4,7 @@
  */
 
 import express, { Request, Response } from 'express';
-import FormData from 'form-data';
-import https from 'https';
-import http from 'http';
+import { Gotify } from './gotify';
 
 const app = express();
 
@@ -77,7 +75,8 @@ app.post('/webhook', async (req: Request, res: Response): Promise<void> => {
     const priority = severityLower ? (priorityMap[severityLower] || 5) : 5;
 
     // Send to Gotify
-    await sendToGotify(title, message, priority);
+    const gotify = new Gotify()
+    await gotify.sendMessage(title, message, priority);
 
     console.log('Notification forwarded to Gotify successfully');
     res.status(200).json({ success: true, message: 'Notification forwarded to Gotify' });
@@ -95,52 +94,6 @@ app.get('/health', (req: Request, res: Response) => {
 /**
  * Send notification to Gotify using multipart/form-data
  */
-function sendToGotify(title: string, message: string, priority: number): Promise<void> {
-  return new Promise((resolve, reject) => {
-    const form = new FormData();
-    form.append('title', title);
-    form.append('message', message);
-    form.append('priority', priority.toString());
-
-    const url = new URL(`${GOTIFY_URL}/message`);
-    url.searchParams.set('token', GOTIFY_TOKEN);
-
-    const protocol = url.protocol === 'https:' ? https : http;
-    
-    const options = {
-      method: 'POST',
-      headers: form.getHeaders()
-    };
-
-    console.log(`Sending to Gotify: ${url.origin}/message`);
-    
-    const request = protocol.request(url.toString(), options, (response) => {
-      let data = '';
-      
-      response.on('data', (chunk) => {
-        data += chunk;
-      });
-      
-      response.on('end', () => {
-        if (response.statusCode && response.statusCode >= 200 && response.statusCode < 300) {
-          console.log('Gotify response:', data);
-          resolve();
-        } else {
-          console.error(`Gotify error (${response.statusCode}):`, data);
-          reject(new Error(`Gotify returned status ${response.statusCode}`));
-        }
-      });
-    });
-
-    request.on('error', (error) => {
-      console.error('Error sending to Gotify:', error);
-      reject(error);
-    });
-
-    form.pipe(request);
-  });
-}
-
 function main(): void {
   console.log('Authentik-Gotify Bridge starting...');
   console.log('Environment:', process.env.NODE_ENV || 'development');

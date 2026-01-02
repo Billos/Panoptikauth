@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/Billos/authentik-gotify-bridge/compare/1.0.1...1.0.2) (2026-01-02)
+
+
+### Bug Fixes
+
+* Adds TODO item to update package version ([be49d50](https://github.com/Billos/authentik-gotify-bridge/commit/be49d5065c6a692a5bdc56d00dfe63c47e709db3))
+
 ## [1.0.1](https://github.com/Billos/authentik-gotify-bridge/compare/1.0.0...1.0.1) (2026-01-02)
 
 

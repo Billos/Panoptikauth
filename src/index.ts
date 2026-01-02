@@ -24,8 +24,136 @@ interface AuthentikNotification {
   event_user_username?: string
 }
 
+// Interface for parsed login event data
+interface LoginEventData {
+  auth_method?: string
+  http_request?: {
+    args?: { next?: string }
+    path?: string
+    method?: string
+    request_id?: string
+    user_agent?: string
+  }
+  auth_method_args?: {
+    mfa_devices?: Array<{ pk: number; app: string; name: string; model_name: string }>
+    known_device?: boolean
+  }
+}
+
 // Middleware to parse text/json content type
 app.use(express.json())
+
+/**
+ * Detects if a notification body contains a login event
+ */
+function isLoginEvent(body: string): boolean {
+  return body.includes("login:") && body.includes("auth_method")
+}
+
+/**
+ * Parses login event data from the body string
+ * The body contains a Python dict representation that needs to be converted to JSON
+ */
+function parseLoginEvent(body: string): LoginEventData | null {
+  try {
+    // Extract the login data part after "login:"
+    const loginPrefix = "login:"
+    const loginIndex = body.indexOf(loginPrefix)
+    if (loginIndex === -1) {
+      return null
+    }
+
+    // Find the matching closing brace for the dictionary
+    let loginDataStr = body.substring(loginIndex + loginPrefix.length).trim()
+    let braceCount = 0
+    let endIndex = -1
+
+    for (let i = 0; i < loginDataStr.length; i++) {
+      if (loginDataStr[i] === "{") {
+        braceCount++
+      } else if (loginDataStr[i] === "}") {
+        braceCount--
+        if (braceCount === 0) {
+          endIndex = i + 1
+          break
+        }
+      }
+    }
+
+    if (endIndex === -1) {
+      return null
+    }
+
+    loginDataStr = loginDataStr.substring(0, endIndex)
+
+    // Convert Python dict format to JSON
+    // Replace single quotes with double quotes for keys and string values
+    const jsonStr = loginDataStr
+      .replace(/'/g, "\"")
+      .replace(/True/g, "true")
+      .replace(/False/g, "false")
+      .replace(/None/g, "null")
+
+    const loginData = JSON.parse(jsonStr) as LoginEventData
+    return loginData
+  } catch (error) {
+    console.error("Failed to parse login event:", error)
+    return null
+  }
+}
+
+/**
+ * Formats a login event into a human-readable message
+ */
+function formatLoginEvent(loginData: LoginEventData, username?: string, email?: string): string {
+  const lines: string[] = []
+
+  lines.push("🔐 **Login Event**\n")
+
+  // User information
+  if (username || email) {
+    lines.push(`**User:** ${username || "N/A"}${email ? ` (${email})` : ""}`)
+  }
+
+  // Authentication method
+  if (loginData.auth_method) {
+    lines.push(`**Authentication Method:** ${loginData.auth_method}`)
+  }
+
+  // Known device status
+  if (loginData.auth_method_args?.known_device !== undefined) {
+    const deviceStatus = loginData.auth_method_args.known_device ? "✅ Known device" : "⚠️ Unknown device"
+    lines.push(`**Device Status:** ${deviceStatus}`)
+  }
+
+  // MFA information
+  if (loginData.auth_method_args?.mfa_devices && loginData.auth_method_args.mfa_devices.length > 0) {
+    const mfaDevices = loginData.auth_method_args.mfa_devices.map((d) => d.name).join(", ")
+    lines.push(`**MFA Devices:** ${mfaDevices}`)
+  }
+
+  // Request details
+  if (loginData.http_request) {
+    lines.push("\n**Request Details:**")
+    if (loginData.http_request.method && loginData.http_request.path) {
+      lines.push(`- Path: \`${loginData.http_request.method} ${loginData.http_request.path}\``)
+    }
+    if (loginData.http_request.user_agent) {
+      // Simplify user agent display
+      const ua = loginData.http_request.user_agent
+      const browserMatch = ua.match(/(Firefox|Chrome|Safari|Edge)\/[\d.]+/)
+      const osMatch = ua.match(/\((.*?)\)/)
+      if (browserMatch || osMatch) {
+        const browser = browserMatch ? browserMatch[0] : ""
+        const os = osMatch ? osMatch[1].split(";")[0].trim() : ""
+        lines.push(`- Browser: ${browser || "Unknown"}`)
+        lines.push(`- OS: ${os || "Unknown"}`)
+      }
+    }
+  }
+
+  return lines.join("\n")
+}
 
 // POST endpoint to receive Authentik notifications
 app.post("/webhook", async (req: Request, res: Response): Promise<void> => {
@@ -59,11 +187,31 @@ app.post("/webhook", async (req: Request, res: Response): Promise<void> => {
     }
 
     // Prepare message for Gotify
-    const title = `Notification from ${notification.event_user_username || "System"}`
-    const message =
-      `${notification.body}\n\n` +
-      `User: ${notification.user_username || "N/A"} (${notification.user_email || "N/A"})\n` +
-      `Event User: ${notification.event_user_username || "N/A"} (${notification.event_user_email || "N/A"})`
+    let title: string
+    let message: string
+
+    // Check if this is a login event and format accordingly
+    if (isLoginEvent(notification.body)) {
+      const loginData = parseLoginEvent(notification.body)
+      if (loginData) {
+        title = `Login: ${notification.event_user_username || notification.user_username || "User"}`
+        message = formatLoginEvent(loginData, notification.event_user_username, notification.event_user_email)
+      } else {
+        // Fallback to default formatting if parsing fails
+        title = `Notification from ${notification.event_user_username || "System"}`
+        message =
+          `${notification.body}\n\n` +
+          `User: ${notification.user_username || "N/A"} (${notification.user_email || "N/A"})\n` +
+          `Event User: ${notification.event_user_username || "N/A"} (${notification.event_user_email || "N/A"})`
+      }
+    } else {
+      // Default formatting for non-login events
+      title = `Notification from ${notification.event_user_username || "System"}`
+      message =
+        `${notification.body}\n\n` +
+        `User: ${notification.user_username || "N/A"} (${notification.user_email || "N/A"})\n` +
+        `Event User: ${notification.event_user_username || "N/A"} (${notification.event_user_email || "N/A"})`
+    }
 
     // Map severity to priority (1-10, where 10 is highest)
     const priorityMap: { [key: string]: number } = { low: 2, normal: 5, medium: 5, high: 8, critical: 10 }

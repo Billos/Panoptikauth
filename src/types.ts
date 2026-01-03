@@ -27,3 +27,25 @@ export interface LoginEventData {
     known_device?: boolean
   }
 }
+
+export interface LoginFailedEventData {
+  stage?: {
+    pk: string
+    app: string
+    name: string
+    model_name: string
+  }
+  username?: string
+  http_request?: {
+    args?: { next?: string }
+    path?: string
+    method?: string
+    request_id?: string
+    user_agent?: string
+  }
+}
+
+export type FormattedEvent = {
+  title: string
+  message: string
+}

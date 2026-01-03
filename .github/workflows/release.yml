@@ -56,5 +56,5 @@ jobs:
           # Use GH_PAT for pushing commits, fallback to GITHUB_TOKEN
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           # Required for Docker Hub authentication
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_REGISTRY_USER: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

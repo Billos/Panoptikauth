@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/Billos/authentik-gotify-bridge/compare/1.0.2...1.1.0) (2026-01-03)
+
+
+### Bug Fixes
+
+* missing dependencies ([743cbb3](https://github.com/Billos/authentik-gotify-bridge/commit/743cbb3f86e9f0379a252704a2c4195e1a39de5f))
+
+
+### Features
+
+* Formats Authentik notification events ([4eb68fc](https://github.com/Billos/authentik-gotify-bridge/commit/4eb68fcf56181a1107ed94f9db640fc125e31e3e))
+* Formats Authentik notification events ([c75e612](https://github.com/Billos/authentik-gotify-bridge/commit/c75e61215e4eb50a4f650273321b23e7da2e9785))
+
 ## [1.0.2](https://github.com/Billos/authentik-gotify-bridge/compare/1.0.1...1.0.2) (2026-01-02)
 
 

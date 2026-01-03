@@ -11,9 +11,5 @@ services:
       - "0.0.0.0:3000:3000"
     environment:
       - NODE_ENV=development
-      # Uncomment and configure these environment variables as needed
-      # - AUTHENTIK_URL=https://authentik.example.com
-      # - GOTIFY_URL=https://gotify.example.com
-      # - GOTIFY_TOKEN=your-token-here
     volumes:
       - .:/app

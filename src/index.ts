@@ -5,24 +5,17 @@
 
 import express, { Request, Response } from "express"
 
+import { formatDefaultEvent, formatLoginEvent, formatLoginFailedEvent } from "./formatters"
 import { Gotify } from "./gotify"
+import { isLoginEvent, isLoginFailedEvent, parseLoginEvent, parseLoginFailedEvent } from "./parsers"
+import { AuthentikNotification, FormattedEvent } from "./types"
 
 const app = express()
 
 // Configuration from environment variables
 const PORT = process.env.PORT || 3000
-const GOTIFY_URL = process.env.GOTIFY_URL || "https://push.example.de"
+const GOTIFY_URL = process.env.GOTIFY_URL || ""
 const GOTIFY_TOKEN = process.env.GOTIFY_TOKEN || ""
-
-// Interface for Authentik notification payload
-interface AuthentikNotification {
-  body: string
-  severity?: string
-  user_email?: string
-  user_username?: string
-  event_user_email?: string
-  event_user_username?: string
-}
 
 // Middleware to parse text/json content type
 app.use(express.json())
@@ -31,8 +24,6 @@ app.use(express.json())
 app.post("/webhook", async (req: Request, res: Response): Promise<void> => {
   try {
     console.log("Received notification from Authentik")
-    console.log("Content-Type:", req.get("content-type"))
-
     // Parse the JSON from text body
     let notification: AuthentikNotification
     try {
@@ -51,19 +42,18 @@ app.post("/webhook", async (req: Request, res: Response): Promise<void> => {
       return
     }
 
-    // Check if Gotify URL and token are configured
-    if (!GOTIFY_TOKEN) {
-      console.error("GOTIFY_TOKEN environment variable not set")
-      res.status(500).json({ error: "Gotify token not configured" })
-      return
-    }
-
     // Prepare message for Gotify
-    const title = `Notification from ${notification.event_user_username || "System"}`
-    const message =
-      `${notification.body}\n\n` +
-      `User: ${notification.user_username || "N/A"} (${notification.user_email || "N/A"})\n` +
-      `Event User: ${notification.event_user_username || "N/A"} (${notification.event_user_email || "N/A"})`
+    let formattedEvent: FormattedEvent
+
+    if (isLoginEvent(notification.body)) {
+      const loginData = parseLoginEvent(notification.body)
+      formattedEvent = formatLoginEvent(loginData, notification.event_user_username, notification.event_user_email)
+    } else if (isLoginFailedEvent(notification.body)) {
+      const failedData = parseLoginFailedEvent(notification.body)
+      formattedEvent = formatLoginFailedEvent(failedData)
+    } else {
+      formattedEvent = formatDefaultEvent(notification.event_user_username, notification.event_user_email, notification.body)
+    }
 
     // Map severity to priority (1-10, where 10 is highest)
     const priorityMap: { [key: string]: number } = { low: 2, normal: 5, medium: 5, high: 8, critical: 10 }
@@ -71,8 +61,8 @@ app.post("/webhook", async (req: Request, res: Response): Promise<void> => {
     const priority = severityLower ? priorityMap[severityLower] || 5 : 5
 
     // Send to Gotify
-    const gotify = new Gotify()
-    await gotify.sendMessage(title, message, priority)
+    const gotify = new Gotify(GOTIFY_URL, GOTIFY_TOKEN)
+    await gotify.sendMessage(formattedEvent.title, formattedEvent.message, priority)
 
     console.log("Notification forwarded to Gotify successfully")
     res.status(200).json({ success: true, message: "Notification forwarded to Gotify" })
@@ -83,7 +73,7 @@ app.post("/webhook", async (req: Request, res: Response): Promise<void> => {
 })
 
 // Health check endpoint
-app.get("/health", (req: Request, res: Response) => {
+app.get("/health", (_req: Request, res: Response) => {
   res.status(200).json({ status: "ok", service: "authentik-gotify-bridge" })
 })
 
@@ -91,6 +81,15 @@ app.get("/health", (req: Request, res: Response) => {
  * Send notification to Gotify using multipart/form-data
  */
 function main(): void {
+  if (!GOTIFY_URL) {
+    console.error("GOTIFY_URL environment variable not set")
+    process.exit(1)
+  }
+  if (!GOTIFY_TOKEN) {
+    console.error("GOTIFY_TOKEN environment variable not set")
+    process.exit(1)
+  }
+
   console.log("Authentik-Gotify Bridge starting...")
   console.log("Environment:", process.env.NODE_ENV || "development")
   console.log("Gotify URL:", GOTIFY_URL)

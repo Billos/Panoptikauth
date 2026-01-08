@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/Billos/authentik-gotify-bridge/compare/1.3.0...1.4.0) (2026-01-08)
+
+
+### Features
+
+* Add support for user_write event notifications ([#11](https://github.com/Billos/authentik-gotify-bridge/issues/11)) ([de08bcf](https://github.com/Billos/authentik-gotify-bridge/commit/de08bcfb6c03ce4f59bab7e5e5567a8c2ecb1926))
+
 # [1.3.0](https://github.com/Billos/authentik-gotify-bridge/compare/1.2.0...1.3.0) (2026-01-08)
 
 

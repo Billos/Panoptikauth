@@ -36,6 +36,9 @@ app.post("/webhook", async (req: Request, res: Response): Promise<void> => {
 
     console.log("Parsed notification:", notification)
 
+    // Extract IP address from headers
+    const ipAddress = req.headers["ip"] as string
+
     // Validate required fields
     if (!notification.body) {
       res.status(400).json({ error: "Missing required field: body" })
@@ -47,7 +50,7 @@ app.post("/webhook", async (req: Request, res: Response): Promise<void> => {
 
     if (isLoginEvent(notification.body)) {
       const loginData = parseLoginEvent(notification.body)
-      formattedEvent = formatLoginEvent(loginData, notification.event_user_username, notification.event_user_email)
+      formattedEvent = formatLoginEvent(loginData, notification.event_user_username, notification.event_user_email, ipAddress)
     } else if (isLoginFailedEvent(notification.body)) {
       const failedData = parseLoginFailedEvent(notification.body)
       formattedEvent = formatLoginFailedEvent(failedData)

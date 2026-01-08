@@ -26,6 +26,18 @@ export interface LoginEventData {
     mfa_devices?: Array<{ pk: number; app: string; name: string; model_name: string }>
     known_device?: boolean
   }
+  geo?: {
+    lat?: number
+    long?: number
+    city?: string
+    country?: string
+    continent?: string
+  }
+  asn?: {
+    asn?: number
+    as_org?: string
+    network?: string
+  }
 }
 
 export interface LoginFailedEventData {

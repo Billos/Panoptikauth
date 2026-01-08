@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/Billos/authentik-gotify-bridge/compare/1.4.0...1.5.0) (2026-01-08)
+
+
+### Features
+
+* Add complete ISO 3166-1 alpha-2 country emoji mappings ([#12](https://github.com/Billos/authentik-gotify-bridge/issues/12)) ([ce7005a](https://github.com/Billos/authentik-gotify-bridge/commit/ce7005a1a00c62057e047ab8f5ed7ece3ad295b0))
+
 # [1.4.0](https://github.com/Billos/authentik-gotify-bridge/compare/1.3.0...1.4.0) (2026-01-08)
 
 

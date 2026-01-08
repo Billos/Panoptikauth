@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/Billos/authentik-gotify-bridge/compare/1.2.0...1.3.0) (2026-01-08)
+
+
+### Features
+
+* Add geolocation, ASN, and IP address to login notifications ([#10](https://github.com/Billos/authentik-gotify-bridge/issues/10)) ([c57bf19](https://github.com/Billos/authentik-gotify-bridge/commit/c57bf19c035dbb0eca653b0235a2efce74693286))
+
 # [1.2.0](https://github.com/Billos/authentik-gotify-bridge/compare/1.1.0...1.2.0) (2026-01-03)
 
 

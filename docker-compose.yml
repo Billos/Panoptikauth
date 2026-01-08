@@ -1,6 +1,6 @@
 services:
   authentik-gotify-bridge:
-    image: docker.io/billos/authentik-gotify-bridge:1.2.0
+    image: docker.io/billos/authentik-gotify-bridge:1.3.0
     container_name: authentik-gotify-bridge
     restart: unless-stopped
     environment:

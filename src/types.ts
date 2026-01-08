@@ -10,6 +10,15 @@ export interface AuthentikNotification {
   user_username?: string
   event_user_email?: string
   event_user_username?: string
+  client_ip?: string
+  context?: {
+    geo?: {
+      city?: string
+      country?: string
+      lat?: number
+      long?: number
+    }
+  }
 }
 
 // Interface for parsed login event data
@@ -25,6 +34,14 @@ export interface LoginEventData {
   auth_method_args?: {
     mfa_devices?: Array<{ pk: number; app: string; name: string; model_name: string }>
     known_device?: boolean
+  }
+  context?: {
+    geo?: {
+      city?: string
+      country?: string
+      lat?: number
+      long?: number
+    }
   }
 }
 
@@ -42,6 +59,14 @@ export interface LoginFailedEventData {
     method?: string
     request_id?: string
     user_agent?: string
+  }
+  context?: {
+    geo?: {
+      city?: string
+      country?: string
+      lat?: number
+      long?: number
+    }
   }
 }
 

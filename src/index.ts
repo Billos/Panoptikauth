@@ -45,12 +45,20 @@ app.post("/webhook", async (req: Request, res: Response): Promise<void> => {
     // Prepare message for Gotify
     let formattedEvent: FormattedEvent
 
+    // Extract IP and geolocation data
+    const clientIp = notification.client_ip
+    const geoData = notification.context?.geo
+
     if (isLoginEvent(notification.body)) {
       const loginData = parseLoginEvent(notification.body)
-      formattedEvent = formatLoginEvent(loginData, notification.event_user_username, notification.event_user_email)
+      // Prefer geolocation from parsed event body, fallback to notification level
+      const eventGeoData = loginData.context?.geo || geoData
+      formattedEvent = formatLoginEvent(loginData, notification.event_user_username, notification.event_user_email, clientIp, eventGeoData)
     } else if (isLoginFailedEvent(notification.body)) {
       const failedData = parseLoginFailedEvent(notification.body)
-      formattedEvent = formatLoginFailedEvent(failedData)
+      // Prefer geolocation from parsed event body, fallback to notification level
+      const eventGeoData = failedData.context?.geo || geoData
+      formattedEvent = formatLoginFailedEvent(failedData, clientIp, eventGeoData)
     } else {
       formattedEvent = formatDefaultEvent(notification.event_user_username, notification.event_user_email, notification.body)
     }

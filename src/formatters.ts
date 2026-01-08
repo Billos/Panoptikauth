@@ -1,6 +1,6 @@
-import { FormattedEvent, LoginEventData, LoginFailedEventData } from "./types"
+import { FormattedEvent, GeoLocation, LoginEventData, LoginFailedEventData } from "./types"
 
-function formatLocationInfo(clientIp?: string, geoData?: { city?: string; country?: string; lat?: number; long?: number }): string[] {
+function formatLocationInfo(clientIp?: string, geoData?: GeoLocation): string[] {
   const lines: string[] = []
 
   // IP and location information
@@ -28,7 +28,7 @@ export function formatLoginEvent(
   username?: string,
   email?: string,
   clientIp?: string,
-  geoData?: { city?: string; country?: string; lat?: number; long?: number },
+  geoData?: GeoLocation,
 ): FormattedEvent {
   const lines: string[] = []
 
@@ -61,11 +61,7 @@ export function formatLoginEvent(
   return { title, message }
 }
 
-export function formatLoginFailedEvent(
-  failedData: LoginFailedEventData,
-  clientIp?: string,
-  geoData?: { city?: string; country?: string; lat?: number; long?: number },
-): FormattedEvent {
+export function formatLoginFailedEvent(failedData: LoginFailedEventData, clientIp?: string, geoData?: GeoLocation): FormattedEvent {
   const lines: string[] = []
 
   lines.push("❌ **Login Failed Event**")

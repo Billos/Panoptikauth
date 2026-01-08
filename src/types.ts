@@ -2,6 +2,14 @@
  * Type definitions for Authentik-Gotify Bridge
  */
 
+// Interface for geolocation data
+export interface GeoLocation {
+  city?: string
+  country?: string
+  lat?: number
+  long?: number
+}
+
 // Interface for Authentik notification payload
 export interface AuthentikNotification {
   body: string
@@ -12,12 +20,7 @@ export interface AuthentikNotification {
   event_user_username?: string
   client_ip?: string
   context?: {
-    geo?: {
-      city?: string
-      country?: string
-      lat?: number
-      long?: number
-    }
+    geo?: GeoLocation
   }
 }
 
@@ -36,12 +39,7 @@ export interface LoginEventData {
     known_device?: boolean
   }
   context?: {
-    geo?: {
-      city?: string
-      country?: string
-      lat?: number
-      long?: number
-    }
+    geo?: GeoLocation
   }
 }
 
@@ -61,12 +59,7 @@ export interface LoginFailedEventData {
     user_agent?: string
   }
   context?: {
-    geo?: {
-      city?: string
-      country?: string
-      lat?: number
-      long?: number
-    }
+    geo?: GeoLocation
   }
 }
 

@@ -207,7 +207,7 @@ Send a test notification:
 
 ```bash
 curl -X POST http://localhost:3000/webhook \
-  -H "Content-Type: application/json" \
+  -H "Content-Type: text/json" \
   -d '{
     "body": "User login failed",
     "severity": "high",
@@ -222,7 +222,7 @@ Send a test notification with IP and location information:
 
 ```bash
 curl -X POST http://localhost:3000/webhook \
-  -H "Content-Type: application/json" \
+  -H "Content-Type: text/json" \
   -d '{
     "body": "login: {\"auth_method\": \"password\", \"auth_method_args\": {\"known_device\": false}}",
     "severity": "info",

@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/Billos/authentik-gotify-bridge/compare/1.5.0...1.6.0) (2026-01-08)
+
+
+### Features
+
+* Adds Google Maps link ([9fc5a8c](https://github.com/Billos/authentik-gotify-bridge/commit/9fc5a8c3e5eee2cff419d1122fe6781d228bfab7))
+
 # [1.5.0](https://github.com/Billos/authentik-gotify-bridge/compare/1.4.0...1.5.0) (2026-01-08)
 
 

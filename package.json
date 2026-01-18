@@ -1,7 +1,7 @@
 {
-  "name": "authentik-gotify-bridge",
+  "name": "panoptikauth",
   "version": "0.0.1",
-  "description": "A bridge between Authentik and Gotify for notifications",
+  "description": "Panoptikauth - A bridge between Authentik and Gotify for notifications",
   "keywords": [
     "authentik",
     "gotify",
@@ -15,7 +15,7 @@
     "build": "tsc",
     "clean": "rm -rf dist",
     "dev": "tsx watch --include 'src/**/*.ts' src/index.ts",
-    "docker:build": "docker build --no-cache . -t billos/authentik-gotify-bridge:latest",
+    "docker:build": "docker build --no-cache . -t billos/panoptikauth:latest",
     "format": "prettier . --write",
     "format-check": "prettier . --check",
     "lint": "eslint src",

@@ -5,7 +5,7 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "sed -i 's/docker.io\\/billos\\/authentik-gotify-bridge:.*/docker.io\\/billos\\/authentik-gotify-bridge:${nextRelease.version}/g' docker-compose*.yml"
+        "prepareCmd": "sed -i 's/docker.io\\/billos\\/panoptikauth:.*/docker.io\\/billos\\/panoptikauth:${nextRelease.version}/g' docker-compose*.yml"
       }
     ],
     "@semantic-release/release-notes-generator",
@@ -21,7 +21,7 @@
     "@semantic-release/github",
     [
       "@codedependant/semantic-release-docker",
-      { "dockerProject": "billos", "dockerTags": ["{{version}}", "latest"] }]
+      { "dockerProject": "panoptikauth", "dockerTags": ["{{version}}", "latest"] }]
   ],
   "tagFormat": "${version}"
 }

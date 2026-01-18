@@ -1,7 +1,7 @@
 services:
-  authentik-gotify-bridge:
-    image: docker.io/billos/authentik-gotify-bridge:1.5.0
-    container_name: authentik-gotify-bridge
+  panoptikauth:
+    image: docker.io/billos/panoptikauth:1.5.0
+    container_name: panoptikauth
     restart: unless-stopped
     environment:
       - NODE_ENV=production

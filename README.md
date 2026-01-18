@@ -1,4 +1,4 @@
-# authentik-gotify-bridge
+# Panoptikauth
 
 A bridge between Authentik and Gotify for notifications. This service receives webhook notifications from Authentik and forwards them to a Gotify server.
 
@@ -42,13 +42,13 @@ You can use `.env.example` as a template.
 Pull the production image:
 
 ```bash
-docker pull docker.io/billos/authentik-gotify-bridge:0.0.1
+docker pull docker.io/billos/panoptikauth:0.0.1
 ```
 
 Or build locally:
 
 ```bash
-docker build -t billos/authentik-gotify-bridge:0.0.1 .
+docker build -t billos/panoptikauth:0.0.1 .
 ```
 
 ## Development
@@ -153,9 +153,9 @@ Or run the Docker container directly:
 
 ```bash
 docker run -d \
-  --name authentik-gotify-bridge \
+  --name panoptikauth \
   -e NODE_ENV=production \
-  docker.io/billos/authentik-gotify-bridge:0.0.1
+  docker.io/billos/panoptikauth:0.0.1
 ```
 
 ## Scripts

@@ -1,5 +1,5 @@
 services:
-  authentik-gotify-bridge:
+  panoptikauth:
     build:
       context: .
       dockerfile: Dockerfile

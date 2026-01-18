@@ -1,5 +1,5 @@
 /**
- * Authentik-Gotify Bridge
+ * Panoptikauth
  * Entry point for the application
  */
 
@@ -80,7 +80,7 @@ app.post("/webhook", async (req: Request, res: Response): Promise<void> => {
 
 // Health check endpoint
 app.get("/health", (_req: Request, res: Response) => {
-  res.status(200).json({ status: "ok", service: "authentik-gotify-bridge" })
+  res.status(200).json({ status: "ok", service: "panoptikauth" })
 })
 
 /**
@@ -96,7 +96,7 @@ function main(): void {
     process.exit(1)
   }
 
-  console.log("Authentik-Gotify Bridge starting...")
+  console.log("Panoptikauth starting...")
   console.log("Environment:", process.env.NODE_ENV || "development")
   console.log("Gotify URL:", GOTIFY_URL)
   console.log("Gotify Token configured:", GOTIFY_TOKEN ? "Yes" : "No")

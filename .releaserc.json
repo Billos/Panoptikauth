@@ -21,7 +21,7 @@
     "@semantic-release/github",
     [
       "@codedependant/semantic-release-docker",
-      { "dockerProject": "panoptikauth", "dockerTags": ["{{version}}", "latest"] }]
+      { "dockerProject": "billos", "dockerTags": ["{{version}}", "latest"] }]
   ],
   "tagFormat": "${version}"
 }

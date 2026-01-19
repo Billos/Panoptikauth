@@ -1,3 +1,25 @@
+# [2.0.0](https://github.com/Billos/Panoptikauth/compare/1.6.0...2.0.0) (2026-01-19)
+
+
+### Features
+
+* Rename project from authentik-gotify-bridge to Panoptikauth ([#16](https://github.com/Billos/Panoptikauth/issues/16)) ([e0b9f9f](https://github.com/Billos/Panoptikauth/commit/e0b9f9f37a09a023620862c700b065b098a8434b))
+
+
+### BREAKING CHANGES
+
+* Rename project
+
+* Initial plan
+
+* Rename project from authentik-gotify-bridge to Panoptikauth
+
+Co-authored-by: Billos <5809662+Billos@users.noreply.github.com>
+
+* Fix .releaserc.json dockerProject to use full path billos/panoptikauth
+
+Co-authored-by: Billos <5809662+Billos@users.noreply.github.com>
+
 # [1.6.0](https://github.com/Billos/Panoptikauth/compare/1.5.0...1.6.0) (2026-01-08)
 
 

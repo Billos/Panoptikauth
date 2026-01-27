@@ -25,13 +25,13 @@ export async function handleSlackRequest(req: Request<{}, {}, Body, SlackQuery>,
   console.log("Received Slack test notification:", req.body)
   console.log("Received parameters:", req.query)
 
-  const { token, url, title } = req.query
+  const { title } = req.query
   const { text = "" } = req.body
 
   const formattedEvent: FormattedEvent = { title, message: text }
   const priority = 5 // Normal priority
   try {
-    const gotify = new Gotify(url, token)
+    const gotify = new Gotify(req.query)
     await gotify.sendMessage(formattedEvent.title, formattedEvent.message, priority)
   } catch (error) {
     return res.status(500).json({ error: "Failed to send message to Gotify", details: error })

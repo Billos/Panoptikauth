@@ -5,7 +5,3 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
-      # Uncomment and configure these environment variables as needed
-      # - AUTHENTIK_URL=https://authentik.example.com
-      # - GOTIFY_URL=https://gotify.example.com
-      # - GOTIFY_TOKEN_AUTHENTIK=your-token-here

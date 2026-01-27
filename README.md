@@ -29,10 +29,6 @@ Create a `.env` file in the root directory with the following variables:
 ```bash
 # Server configuration
 PORT=3000
-
-# Gotify configuration
-GOTIFY_URL=https://your-gotify-server.com
-GOTIFY_TOKEN_AUTHENTIK=your-gotify-app-token
 ```
 
 You can use `.env.example` as a template.
@@ -101,7 +97,7 @@ yarn start
 
 ### Webhook Endpoint
 
-The bridge exposes a POST endpoint at `/webhook` that accepts Authentik notifications with the following JSON payload:
+The bridge exposes a POST endpoint at `/authentik` that accepts Authentik notifications with the following JSON payload:
 
 ```json
 {
@@ -122,7 +118,7 @@ In your Authentik instance:
 
 1. Go to **Events** → **Transports**
 2. Create a new **Webhook** transport
-3. Set the webhook URL to: `http://your-bridge-server:3000/webhook`
+3. Set the webhook URL to: `http://your-bridge-server:3000/authentik?url=https://gotify.mydomain.fr&token=xxxxx&title=Test
 4. Set the Content-Type to `text/json`
 5. Create notification rules that use this transport
 
@@ -181,7 +177,7 @@ docker run -d \
 Send a test notification:
 
 ```bash
-curl -X POST http://localhost:3000/webhook \
+curl -X POST http://localhost:3000/authentik?url=https://gotify.fr&token=xxxxx&title=Test \
   -H "Content-Type: text/json" \
   -d '{
     "body": "User login failed",
@@ -210,9 +206,6 @@ You can configure the application using environment variables. Add them to your 
 ```yaml
 environment:
   - NODE_ENV=production
-  # - AUTHENTIK_URL=https://authentik.example.com
-  # - GOTIFY_URL=https://gotify.example.com
-  # - GOTIFY_TOKEN_AUTHENTIK=your-token-here
 ```
 
 ## TODO

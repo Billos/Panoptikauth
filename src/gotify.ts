@@ -1,12 +1,20 @@
 import axios, { AxiosInstance } from "axios"
 
+type GotifyConfig = {
+  url: string
+  token: string
+}
+
 export class Gotify {
   private request: AxiosInstance | null = null
 
-  constructor(
-    private url: string,
-    private token: string,
-  ) {
+  private url: string
+
+  private token: string
+
+  constructor({ url, token }: GotifyConfig) {
+    this.url = url
+    this.token = token
     this.request = axios.create({ baseURL: this.url, headers: { "X-Gotify-Key": this.token } })
   }
 

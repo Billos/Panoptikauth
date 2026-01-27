@@ -28,7 +28,8 @@
     "@slack/webhook": "^7.0.6",
     "axios": "^1.13.2",
     "express": "^5.2.1",
-    "json5": "^2.2.3"
+    "json5": "^2.2.3",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@codedependant/semantic-release-docker": "^5.1.1",

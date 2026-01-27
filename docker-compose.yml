@@ -9,4 +9,3 @@ services:
       # - AUTHENTIK_URL=https://authentik.example.com
       # - GOTIFY_URL=https://gotify.example.com
       # - GOTIFY_TOKEN_AUTHENTIK=your-token-here
-      # - GOTIFY_TOKEN_SLACK=your-token-here

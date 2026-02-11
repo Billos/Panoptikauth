@@ -11,11 +11,9 @@ export async function handleSlackRequest(
   res: Response<{}, { data: FormattedEvent }>,
   next: NextFunction,
 ) {
-  console.log("Received Slack test notification:", req.body)
+  const { title = "Slack Notification" } = req.query
+  const { text: message = "" } = req.body
 
-  const { title } = req.query
-  const { text = "" } = req.body
-
-  res.locals.data = { title: title || "Slack Notification", message: text }
+  res.locals.data = { title, message }
   return next()
 }

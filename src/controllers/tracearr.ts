@@ -13,8 +13,6 @@ export async function handleTracearrRequest(
   res: Response<{}, { data: FormattedEvent }>,
   next: NextFunction,
 ) {
-  console.log("Received Tracearr test notification:", req.body)
-
   // Parse the JSON from body
   let payload: TracearrWebhookPayload
   try {
@@ -24,8 +22,6 @@ export async function handleTracearrRequest(
     res.status(400).json({ error: "Invalid JSON payload" })
     return
   }
-
-  console.log("Parsed Tracearr notification:", payload)
 
   // Validate required fields
   if (!payload.event || !payload.timestamp || !payload.data) {

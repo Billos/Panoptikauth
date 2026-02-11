@@ -4,7 +4,8 @@ import { z } from "zod"
 import { formatDefaultEvent, formatLoginEvent, formatLoginFailedEvent, formatUserWriteEvent } from "../formatters/authentik"
 import { Gotify } from "../gotify"
 import { isLoginEvent, isLoginFailedEvent, isUserWriteEvent, parseLoginEvent, parseLoginFailedEvent, parseUserWriteEvent } from "../parsers"
-import { AuthentikNotification, FormattedEvent } from "../types"
+import { AuthentikNotification } from "../types"
+import { FormattedEvent } from "../types/gotify"
 
 const AuthentikQuerySchema = z.object({
   token: z.string(),

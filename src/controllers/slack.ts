@@ -3,7 +3,7 @@ import { Request, Response } from "express"
 import { z } from "zod"
 
 import { Gotify } from "../gotify"
-import { FormattedEvent } from "../types"
+import { FormattedEvent } from "../types/gotify"
 
 const SlackQuerySchema = z.object({
   token: z.string(),

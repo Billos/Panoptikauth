@@ -1,5 +1,6 @@
 import { Extractor } from "../extractor"
-import { FormattedEvent, LoginEventData, LoginFailedEventData, UserWriteEventData } from "../types"
+import { LoginEventData, LoginFailedEventData, UserWriteEventData } from "../types/authentik"
+import { FormattedEvent } from "../types/gotify"
 
 export function formatLoginEvent(ipAddress: string, data: LoginEventData, username?: string, email?: string): FormattedEvent {
   const extractor = new Extractor()

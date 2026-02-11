@@ -67,8 +67,3 @@ export interface UserWriteEventData {
   }
   http_request?: HTTPRequest
 }
-
-export type FormattedEvent = {
-  title: string
-  message: string
-}

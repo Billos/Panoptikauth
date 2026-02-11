@@ -1,3 +1,12 @@
+# [2.3.0](https://github.com/Billos/Panoptikauth/compare/2.2.0...2.3.0) (2026-02-11)
+
+
+### Features
+
+* Adds priority support to Gotify messages ([7c763c4](https://github.com/Billos/Panoptikauth/commit/7c763c4bb6e4c88e30b2161057819af5ae9c493d))
+* Adds test event support ([d7ca1f3](https://github.com/Billos/Panoptikauth/commit/d7ca1f3e0cba24eb1cd5c5570f2aa6f129a559fb))
+* Adds Tracearr webhook support ([bfa8560](https://github.com/Billos/Panoptikauth/commit/bfa85603706f534b8f244f11f925eadbe60c087c))
+
 # [2.2.0](https://github.com/Billos/Panoptikauth/compare/2.1.0...2.2.0) (2026-01-27)
 
 

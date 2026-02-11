@@ -8,6 +8,7 @@ import express from "express"
 import { handleAuthentikWebhook } from "./controllers/authentik"
 import { handleHealthCheck } from "./controllers/health"
 import { handleSlackRequest } from "./controllers/slack"
+import { handleTracearrRequest } from "./controllers/tracearr"
 
 const app = express()
 
@@ -24,6 +25,8 @@ app.get("/health", handleHealthCheck)
 
 app.post("/slack", handleSlackRequest)
 
+app.post("/tracearr", handleTracearrRequest)
+
 /**
  * Send notification to Gotify using multipart/form-data
  */
@@ -35,6 +38,7 @@ function main(): void {
     console.log(`Server listening on port ${PORT}`)
     console.log(`Webhook endpoint: http://localhost:${PORT}/webhook`)
     console.log(`Slack endpoint: http://localhost:${PORT}/slack`)
+    console.log(`Tracearr endpoint: http://localhost:${PORT}/tracearr`)
     console.log(`Health check: http://localhost:${PORT}/health`)
   })
 }

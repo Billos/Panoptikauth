@@ -5,6 +5,7 @@ import {
   TracearrServerPayload,
   TracearrStreamStartedPayload,
   TracearrStreamStoppedPayload,
+  TracearrTestPayload,
   TracearrTrustScorePayload,
   TracearrViolationPayload,
   TracearrWebhookPayload,
@@ -26,6 +27,8 @@ export function formatTracearrEvent(payload: TracearrWebhookPayload): FormattedE
       return formatTracearrNewDevice(payload)
     case "trust_score_changed":
       return formatTracearrTrustScore(payload)
+    case "test":
+      return formatTracearrTest(payload)
   }
 }
 
@@ -153,6 +156,18 @@ function formatTracearrTrustScore(payload: TracearrTrustScorePayload): Formatted
   extractor.addLine(`\n**Timestamp:** ${new Date(payload.timestamp).toLocaleString()}`)
 
   const title = `Trust Score ${change}: ${userName}`
+  const message = extractor.getResult()
+  return { title, message }
+}
+
+function formatTracearrTest(payload: TracearrTestPayload): FormattedEvent {
+  const extractor = new TracearrExtractor()
+
+  extractor.addLine("🧪 **Tracearr Test Event**\n")
+  extractor.addLine(`\n**Message:** ${payload.data.message}`)
+  extractor.addLine(`\n**Timestamp:** ${new Date(payload.timestamp).toLocaleString()}`)
+
+  const title = `Tracearr Test: ${payload.data.message}`
   const message = extractor.getResult()
   return { title, message }
 }

@@ -110,6 +110,14 @@ export interface TracearrTrustScorePayload {
   }
 }
 
+export interface TracearrTestPayload {
+  event: "test"
+  timestamp: string
+  data: {
+    message: string
+  }
+}
+
 export type TracearrWebhookPayload =
   | TracearrViolationPayload
   | TracearrStreamStartedPayload
@@ -117,3 +125,4 @@ export type TracearrWebhookPayload =
   | TracearrServerPayload
   | TracearrNewDevicePayload
   | TracearrTrustScorePayload
+  | TracearrTestPayload

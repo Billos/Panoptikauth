@@ -19,12 +19,9 @@ const PORT = process.env.PORT || 3000
 app.use(express.json())
 
 // POST endpoint to receive Authentik notifications
-app.post("/authentik", handleAuthentikWebhook)
-
 app.get("/health", handleHealthCheck)
-
+app.post("/authentik", handleAuthentikWebhook)
 app.post("/slack", handleSlackRequest)
-
 app.post("/tracearr", handleTracearrRequest)
 
 /**

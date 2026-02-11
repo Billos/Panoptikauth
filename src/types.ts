@@ -83,6 +83,7 @@ export type TracearrEventType =
   | "new_device"
   | "trust_score_changed"
 
+// Represents a user in the Tracearr system
 interface TracearrUser {
   id: string
   username: string

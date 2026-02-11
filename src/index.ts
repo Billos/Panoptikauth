@@ -6,10 +6,16 @@
 import { IncomingWebhookSendArguments } from "@slack/webhook"
 import express, { Request, Response } from "express"
 
-import { formatDefaultEvent, formatLoginEvent, formatLoginFailedEvent, formatUserWriteEvent } from "./formatters"
+import {
+  formatDefaultEvent,
+  formatLoginEvent,
+  formatLoginFailedEvent,
+  formatTracearrEvent,
+  formatUserWriteEvent,
+} from "./formatters"
 import { Gotify } from "./gotify"
 import { isLoginEvent, isLoginFailedEvent, isUserWriteEvent, parseLoginEvent, parseLoginFailedEvent, parseUserWriteEvent } from "./parsers"
-import { AuthentikNotification, FormattedEvent } from "./types"
+import { AuthentikNotification, FormattedEvent, TracearrWebhookPayload } from "./types"
 
 const app = express()
 
@@ -18,6 +24,7 @@ const PORT = process.env.PORT || 3000
 const GOTIFY_URL = process.env.GOTIFY_URL || ""
 const GOTIFY_TOKEN_AUTHENTIK = process.env.GOTIFY_TOKEN_AUTHENTIK || ""
 const GOTIFY_TOKEN_SLACK = process.env.GOTIFY_TOKEN_SLACK || ""
+const GOTIFY_TOKEN_TRACEARR = process.env.GOTIFY_TOKEN_TRACEARR || ""
 const NOTIFICATION_SLACK_TITLE = process.env.NOTIFICATION_SLACK_TITLE || "Slack Notification"
 
 // Middleware to parse text/json content type
@@ -98,6 +105,56 @@ app.post("/slack", async (req: Request<{}, {}, IncomingWebhookSendArguments>, re
   res.status(200).json({ status: "ok", service: "panoptikauth" })
 })
 
+// POST endpoint to receive Tracearr notifications
+app.post("/tracearr", async (req: Request, res: Response): Promise<void> => {
+  try {
+    console.log("Received notification from Tracearr")
+
+    // Parse the JSON from body
+    let payload: TracearrWebhookPayload
+    try {
+      payload = typeof req.body === "string" ? JSON.parse(req.body) : req.body
+    } catch (parseError) {
+      console.error("Failed to parse Tracearr notification:", parseError)
+      res.status(400).json({ error: "Invalid JSON payload" })
+      return
+    }
+
+    console.log("Parsed Tracearr notification:", payload)
+
+    // Validate required fields
+    if (!payload.event || !payload.timestamp || !payload.data) {
+      res.status(400).json({ error: "Missing required fields: event, timestamp, or data" })
+      return
+    }
+
+    // Format the event
+    const formattedEvent = formatTracearrEvent(payload)
+
+    // Map event types to priority
+    const priorityMap: { [key: string]: number } = {
+      violation_detected: 10, // Critical
+      server_down: 10, // Critical
+      server_up: 5, // Normal
+      stream_started: 3, // Low
+      stream_stopped: 3, // Low
+      new_device: 7, // High
+      trust_score_changed: 5, // Normal
+    }
+    const priority = priorityMap[payload.event] || 5
+
+    // Send to Gotify
+    const gotify = new Gotify(GOTIFY_URL, GOTIFY_TOKEN_TRACEARR)
+    await gotify.sendMessage(formattedEvent.title, formattedEvent.message, priority)
+
+    console.log("Tracearr notification forwarded to Gotify successfully")
+    res.status(200).json({ success: true, message: "Notification forwarded to Gotify" })
+  } catch (error) {
+    console.error("Error processing Tracearr notification:", error)
+    res.status(500).json({ error: "Internal server error" })
+  }
+})
+
 /**
  * Send notification to Gotify using multipart/form-data
  */
@@ -114,6 +171,10 @@ function main(): void {
     console.error("GOTIFY_TOKEN_SLACK environment variable not set")
     process.exit(1)
   }
+  if (!GOTIFY_TOKEN_TRACEARR) {
+    console.error("GOTIFY_TOKEN_TRACEARR environment variable not set")
+    process.exit(1)
+  }
 
   console.log("Panoptikauth starting...")
   console.log("Environment:", process.env.NODE_ENV || "development")
@@ -124,6 +185,7 @@ function main(): void {
     console.log(`Server listening on port ${PORT}`)
     console.log(`Webhook endpoint: http://localhost:${PORT}/webhook`)
     console.log(`Slack endpoint: http://localhost:${PORT}/slack`)
+    console.log(`Tracearr endpoint: http://localhost:${PORT}/tracearr`)
     console.log(`Health check: http://localhost:${PORT}/health`)
   })
 }

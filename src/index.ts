@@ -9,6 +9,7 @@ import { handleAuthentikWebhook } from "./controllers/authentik"
 import { handleHealthCheck } from "./controllers/health"
 import { handleSlackRequest } from "./controllers/slack"
 import { handleTracearrRequest } from "./controllers/tracearr"
+import { gotifyParameters } from "./middleware/gotifyParameters"
 
 const app = express()
 
@@ -20,9 +21,9 @@ app.use(express.json())
 
 // POST endpoint to receive Authentik notifications
 app.get("/health", handleHealthCheck)
-app.post("/authentik", handleAuthentikWebhook)
-app.post("/slack", handleSlackRequest)
-app.post("/tracearr", handleTracearrRequest)
+app.post("/authentik", gotifyParameters, handleAuthentikWebhook)
+app.post("/slack", gotifyParameters, handleSlackRequest)
+app.post("/tracearr", gotifyParameters, handleTracearrRequest)
 
 /**
  * Send notification to Gotify using multipart/form-data

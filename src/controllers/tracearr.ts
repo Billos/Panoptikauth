@@ -1,28 +1,14 @@
 import { IncomingWebhookSendArguments } from "@slack/webhook"
 import { Request, Response } from "express"
-import { z } from "zod"
 
 import { formatTracearrEvent } from "../formatters/tracearr"
 import { Gotify } from "../gotify"
+import { GotifyQuery } from "../middleware/gotifyParameters"
 import { TracearrWebhookPayload } from "../types/tracearr"
-
-const TracearrQuerySchema = z.object({
-  token: z.string(),
-  url: z.url(),
-  title: z.string().optional(),
-})
-
-type TracearrQuery = z.infer<typeof TracearrQuerySchema>
 
 type Body = IncomingWebhookSendArguments
 
-export async function handleTracearrRequest(req: Request<{}, {}, Body, TracearrQuery>, res: Response) {
-  const parsed = TracearrQuerySchema.safeParse(req.query)
-  if (!parsed.success) {
-    console.log("Failed to parse Tracearr request query:", parsed.error)
-    return res.status(400).json(parsed.error)
-  }
-
+export async function handleTracearrRequest(req: Request<{}, {}, Body, GotifyQuery>, res: Response) {
   console.log("Received Tracearr test notification:", req.body)
   console.log("Received parameters:", req.query)
 

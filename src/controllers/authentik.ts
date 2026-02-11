@@ -3,24 +3,12 @@ import { z } from "zod"
 
 import { formatDefaultEvent, formatLoginEvent, formatLoginFailedEvent, formatUserWriteEvent } from "../formatters/authentik"
 import { Gotify } from "../gotify"
+import { GotifyQuery } from "../middleware/gotifyParameters"
 import { isLoginEvent, isLoginFailedEvent, isUserWriteEvent, parseLoginEvent, parseLoginFailedEvent, parseUserWriteEvent } from "../parsers"
 import { AuthentikNotification } from "../types/authentik"
 import { FormattedEvent } from "../types/gotify"
 
-const AuthentikQuerySchema = z.object({
-  token: z.string(),
-  url: z.url(),
-  title: z.string(),
-})
-type AuthentikQuery = z.infer<typeof AuthentikQuerySchema>
-
-export async function handleAuthentikWebhook(req: Request<{}, {}, AuthentikNotification, AuthentikQuery>, res: Response) {
-  const parsed = AuthentikQuerySchema.safeParse(req.query)
-  if (!parsed.success) {
-    console.log("Failed to parse Authentik request query:", parsed.error)
-    return res.status(400).json(parsed.error)
-  }
-
+export async function handleAuthentikWebhook(req: Request<{}, {}, AuthentikNotification, GotifyQuery>, res: Response) {
   console.log("Received notification from Authentik")
   try {
     let notification = req.body

@@ -1,5 +1,5 @@
-import { Extractor } from "./extractor"
-import { FormattedEvent, LoginEventData, LoginFailedEventData, UserWriteEventData } from "./types"
+import { Extractor } from "../extractor"
+import { FormattedEvent, LoginEventData, LoginFailedEventData, UserWriteEventData } from "../types"
 
 export function formatLoginEvent(ipAddress: string, data: LoginEventData, username?: string, email?: string): FormattedEvent {
   const extractor = new Extractor()

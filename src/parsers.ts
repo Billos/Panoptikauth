@@ -4,7 +4,7 @@
 
 import { parse } from "json5"
 
-import { LoginEventData, LoginFailedEventData, UserWriteEventData } from "./types"
+import { LoginEventData, LoginFailedEventData, UserWriteEventData } from "./types/authentik"
 
 export function isLoginEvent(body: string): boolean {
   return /login:\s*/.test(body)

@@ -4,7 +4,7 @@
  */
 
 import { getContinentEmoji, getCountryEmoji } from "./emoji"
-import { LoginEventData, LoginFailedEventData, UserWriteEventData } from "./types"
+import { LoginEventData, LoginFailedEventData, UserWriteEventData } from "./types/authentik"
 
 export class Extractor {
   private lines: string[] = []

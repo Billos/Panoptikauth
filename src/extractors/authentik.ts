@@ -3,40 +3,11 @@
  * Provides a single, consistent way to format each type of data
  */
 
-import { getContinentEmoji, getCountryEmoji } from "./emoji"
-import { LoginEventData, LoginFailedEventData, UserWriteEventData } from "./types/authentik"
+import { getContinentEmoji, getCountryEmoji } from "../emoji"
+import { LoginEventData, LoginFailedEventData, UserWriteEventData } from "../types/authentik"
+import { Extractor } from "./extractor"
 
-export class Extractor {
-  private lines: string[] = []
-
-  /**
-   * Get the accumulated message lines
-   */
-  getLines(): string[] {
-    return this.lines
-  }
-
-  /**
-   * Get the accumulated message as a single string
-   */
-  getResult(): string {
-    return this.lines.join("\n")
-  }
-
-  /**
-   * Add a line to the accumulated message lines
-   */
-  addLine(line: string): void {
-    this.lines.push(line)
-  }
-
-  /**
-   * Clear the accumulated message lines
-   */
-  clear(): void {
-    this.lines = []
-  }
-
+export class AuthentikExtractor extends Extractor {
   /**
    * Extract user information from login data
    */
@@ -45,7 +16,7 @@ export class Extractor {
       return
     }
 
-    this.lines.push(`\n**User:** ${username || "N/A"}${email ? ` (${email})` : ""}`)
+    this.addLine(`\n**User:** ${username || "N/A"}${email ? ` (${email})` : ""}`)
   }
 
   /**
@@ -56,7 +27,7 @@ export class Extractor {
       return
     }
 
-    this.lines.push(`\n**IP Address:** ${ipAddress}`)
+    this.addLine(`\n**IP Address:** ${ipAddress}`)
   }
 
   /**
@@ -69,7 +40,7 @@ export class Extractor {
     }
 
     const deviceStatus = knownDevice ? "✅ Known device" : "⚠️ Unknown device"
-    this.lines.push(`\n**Device Status:** ${deviceStatus}`)
+    this.addLine(`\n**Device Status:** ${deviceStatus}`)
   }
 
   /**
@@ -82,7 +53,7 @@ export class Extractor {
     }
 
     const mfaList = mfaDevices.map((device) => `- ${device.app} (${device.name}, ${device.model_name})`).join("\n")
-    this.lines.push(`\n**MFA Devices Used:**\n${mfaList}`)
+    this.addLine(`\n**MFA Devices Used:**\n${mfaList}`)
   }
 
   /**
@@ -107,13 +78,13 @@ export class Extractor {
     }
 
     if (geoParts.length > 0) {
-      this.lines.push(`\n**Location:** ${geoParts.join(", ")}`)
+      this.addLine(`\n**Location:** ${geoParts.join(", ")}`)
     }
 
     if (geo.lat !== undefined && geo.long !== undefined) {
-      this.lines.push(`\n**Coordinates:** ${geo.lat}, ${geo.long}`)
+      this.addLine(`\n**Coordinates:** ${geo.lat}, ${geo.long}`)
       const googleMapsUrl = `https://www.google.com/maps?q=${geo.lat},${geo.long}`
-      this.lines.push(`\n[View on Google Maps](${googleMapsUrl})`)
+      this.addLine(`\n[View on Google Maps](${googleMapsUrl})`)
     }
   }
 
@@ -141,7 +112,7 @@ export class Extractor {
       return
     }
 
-    this.lines.push(`\n**ASN:** ${asnParts.join(" ")}`)
+    this.addLine(`\n**ASN:** ${asnParts.join(" ")}`)
   }
 
   /**
@@ -153,7 +124,7 @@ export class Extractor {
       return
     }
 
-    this.lines.push(`\n**Request:** ${httpRequest.method || "N/A"} ${httpRequest.path || "N/A"}`)
+    this.addLine(`\n**Request:** ${httpRequest.method || "N/A"} ${httpRequest.path || "N/A"}`)
   }
 
   /**
@@ -165,7 +136,7 @@ export class Extractor {
       return
     }
 
-    this.lines.push(`\n**Failed Stage:** ${stage.app} (${stage.name}, ${stage.model_name})`)
+    this.addLine(`\n**Failed Stage:** ${stage.app} (${stage.name}, ${stage.model_name})`)
   }
 
   /**
@@ -177,7 +148,7 @@ export class Extractor {
       return
     }
 
-    this.lines.push(`\n**Username:** ${username}`)
+    this.addLine(`\n**Username:** ${username}`)
   }
 
   /**
@@ -189,7 +160,7 @@ export class Extractor {
       return
     }
 
-    this.lines.push(`\n**Name:** ${name}`)
+    this.addLine(`\n**Name:** ${name}`)
   }
 
   /**
@@ -201,7 +172,7 @@ export class Extractor {
       return
     }
 
-    this.lines.push(`\n**Email:** ${email}`)
+    this.addLine(`\n**Email:** ${email}`)
   }
 
   /**
@@ -213,6 +184,6 @@ export class Extractor {
       return
     }
 
-    this.lines.push(`\n**Locale:** ${locale}`)
+    this.addLine(`\n**Locale:** ${locale}`)
   }
 }

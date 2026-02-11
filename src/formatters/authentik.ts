@@ -1,9 +1,9 @@
-import { Extractor } from "../extractor"
+import { AuthentikExtractor } from "../extractors/authentik"
 import { LoginEventData, LoginFailedEventData, UserWriteEventData } from "../types/authentik"
 import { FormattedEvent } from "../types/gotify"
 
 export function formatLoginEvent(ipAddress: string, data: LoginEventData, username?: string, email?: string): FormattedEvent {
-  const extractor = new Extractor()
+  const extractor = new AuthentikExtractor()
 
   extractor.addLine("🔐 **Login Event**\n")
 
@@ -31,7 +31,7 @@ export function formatLoginEvent(ipAddress: string, data: LoginEventData, userna
 }
 
 export function formatLoginFailedEvent(ipAddress: string, data: LoginFailedEventData): FormattedEvent {
-  const extractor = new Extractor()
+  const extractor = new AuthentikExtractor()
 
   extractor.addLine("❌ **Login Failed Event**")
 
@@ -59,7 +59,7 @@ export function formatLoginFailedEvent(ipAddress: string, data: LoginFailedEvent
 }
 
 export function formatDefaultEvent(ipAddress: string, userUsername?: string, userEmail?: string, body?: string): FormattedEvent {
-  const extractor = new Extractor()
+  const extractor = new AuthentikExtractor()
 
   extractor.addLine("ℹ️ **Default Event**")
   extractor.extractIpAddress(ipAddress)
@@ -70,7 +70,7 @@ export function formatDefaultEvent(ipAddress: string, userUsername?: string, use
 }
 
 export function formatUserWriteEvent(ipAddress: string, data: UserWriteEventData): FormattedEvent {
-  const extractor = new Extractor()
+  const extractor = new AuthentikExtractor()
 
   const isNewUser = data.created === true
   const eventIcon = isNewUser ? "👤" : "✏️"

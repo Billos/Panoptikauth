@@ -1,0 +1,9 @@
+ℹ️ **Default Event**
+
+{% if ipAddress %}
+**IP Address:** {{ ipAddress }}
+
+{% endif %}
+{{ body }}
+
+User: {{ userUsername or "N/A" }} ({{ userEmail or "N/A" }})

@@ -1,0 +1,48 @@
+{{ eventIcon }} **{{ eventType }}**
+
+{% if username %}
+**Username:** {{ username }}
+
+{% endif %}
+{% if name %}
+**Name:** {{ name }}
+
+{% endif %}
+{% if email %}
+**Email:** {{ email }}
+
+{% endif %}
+{% if locale %}
+**Locale:** {{ locale }}
+
+{% endif %}
+{% if httpRequest %}
+**Request:** {{ httpRequest.method or "N/A" }} {{ httpRequest.path or "N/A" }}
+
+{% endif %}
+{% if ipAddress %}
+**IP Address:** {{ ipAddress }}
+
+{% endif %}
+{% if geo %}
+**Location:**
+{% if geo.continent %}
+ - Continent: {{ geo.continentEmoji }} {{ geo.continent }}
+{% endif %}
+{% if geo.country %}
+ - Country: {{ geo.countryEmoji }} {{ geo.country }}
+{% endif %}
+{% if geo.city %}
+ - City: {{ geo.city }}
+{% endif %}
+
+{% if geo.lat is defined and geo.long is defined %}
+**Coordinates:** {{ geo.lat }}, {{ geo.long }}
+[View on Google Maps](https://www.google.com/maps?q={{ geo.lat }},{{ geo.long }})
+
+{% endif %}
+{% endif %}
+{% if asn %}
+**ASN:** {{ ("ASN " + asn.asn | string) if asn.asn is defined else "" }}{{ (" " + asn.as_org) if asn.as_org else "" }}{{ (" (" + asn.network + ")") if asn.network else "" }}
+
+{% endif %}

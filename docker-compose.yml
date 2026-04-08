@@ -1,6 +1,6 @@
 services:
   panoptikauth:
-    image: docker.io/billos/panoptikauth:2.3.0
+    image: docker.io/billos/panoptikauth:2.3.1
     container_name: panoptikauth
     restart: unless-stopped
     environment:

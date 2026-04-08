@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/Billos/Panoptikauth/compare/2.3.0...2.3.1) (2026-04-08)
+
+
+### Bug Fixes
+
+* use fetch rather than axios ([13d3330](https://github.com/Billos/Panoptikauth/commit/13d3330c2e3281c9147bec6ca2120f70bbea5238))
+
 # [2.3.0](https://github.com/Billos/Panoptikauth/compare/2.2.0...2.3.0) (2026-02-11)
 
 

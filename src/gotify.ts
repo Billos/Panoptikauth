@@ -1,13 +1,9 @@
-import axios, { AxiosInstance } from "axios"
-
 type GotifyConfig = {
   url: string
   token: string
 }
 
 export class Gotify {
-  private request: AxiosInstance | null = null
-
   private url: string
 
   private token: string
@@ -15,19 +11,26 @@ export class Gotify {
   constructor({ url, token }: GotifyConfig) {
     this.url = url
     this.token = token
-    this.request = axios.create({ baseURL: this.url, headers: { "X-Gotify-Key": this.token } })
   }
 
   public async sendMessage(title: string, message: string, priority: number): Promise<string> {
-    if (!this.request) {
+    if (!this.url || !this.token) {
       throw new Error("Gotify client not initialized")
     }
-    const result = await this.request.post<{ id: number }>("/message", {
-      title,
-      message,
-      priority,
-      extras: { "client::display": { contentType: "text/markdown" } },
+    const result = await fetch(`${this.url}/message`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Gotify-Key": this.token,
+      },
+      body: JSON.stringify({
+        title,
+        message,
+        priority,
+        extras: { "client::display": { contentType: "text/markdown" } },
+      }),
     })
-    return `${result.data.id}`
+    const data = (await result.json()) as { id: string }
+    return data.id
   }
 }

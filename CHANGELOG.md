@@ -1,3 +1,10 @@
+## [2.4.1](https://github.com/Billos/Panoptikauth/compare/2.4.0...2.4.1) (2026-04-09)
+
+
+### Bug Fixes
+
+* use @slack/types for IncomingWebhookSendArguments instead of @slack/webhook ([c3d83e7](https://github.com/Billos/Panoptikauth/commit/c3d83e7bec0f1543c73db84b873f8855b36f38dc))
+
 # [2.4.0](https://github.com/Billos/Panoptikauth/compare/2.3.1...2.4.0) (2026-04-09)
 
 

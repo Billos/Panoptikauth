@@ -1,15 +1,13 @@
-import { IncomingWebhookSendArguments } from "@slack/webhook"
 import { NextFunction, Request, Response } from "express"
 
 import { formatTracearrEvent } from "../formatters/tracearr"
 import { GotifyQuery } from "../middleware/gotifyParameters"
 import { FormattedEvent } from "../types/gotify"
+import { IncomingWebhookSendArguments } from "../types/slack"
 import { TracearrWebhookPayload } from "../types/tracearr"
 
-type Body = IncomingWebhookSendArguments
-
 export async function handleTracearrRequest(
-  req: Request<{}, {}, Body, GotifyQuery>,
+  req: Request<{}, {}, IncomingWebhookSendArguments, GotifyQuery>,
   res: Response<{}, { data: FormattedEvent }>,
   next: NextFunction,
 ) {

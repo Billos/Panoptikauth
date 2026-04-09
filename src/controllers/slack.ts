@@ -1,13 +1,11 @@
-import { IncomingWebhookSendArguments } from "@slack/webhook"
 import { NextFunction, Request, Response } from "express"
 
 import { GotifyQuery } from "../middleware/gotifyParameters"
 import { FormattedEvent } from "../types/gotify"
-
-type Body = IncomingWebhookSendArguments
+import { IncomingWebhookSendArguments } from "../types/slack"
 
 export async function handleSlackRequest(
-  req: Request<{}, {}, Body, GotifyQuery>,
+  req: Request<{}, {}, IncomingWebhookSendArguments, GotifyQuery>,
   res: Response<{}, { data: FormattedEvent }>,
   next: NextFunction,
 ) {

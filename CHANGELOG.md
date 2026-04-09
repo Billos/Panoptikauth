@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/Billos/Panoptikauth/compare/2.3.1...2.4.0) (2026-04-09)
+
+
+### Features
+
+* add Nunjucks templating service ([08ca13b](https://github.com/Billos/Panoptikauth/commit/08ca13b8e26fe823e52fdaeb26615cbb55c7b8a9))
+
 ## [2.3.1](https://github.com/Billos/Panoptikauth/compare/2.3.0...2.3.1) (2026-04-08)
 
 

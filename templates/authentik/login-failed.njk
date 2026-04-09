@@ -1,0 +1,14 @@
+❌ **Login Failed Event**
+
+{% if username %}
+**Username:** {{ username }}
+
+{% endif %}
+{% if ipAddress %}
+**IP Address:** {{ ipAddress }}
+
+{% endif %}
+{% if stage %}
+**Failed Stage:** {{ stage.app }} ({{ stage.name }}, {{ stage.model_name }})
+
+{% endif %}

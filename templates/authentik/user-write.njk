@@ -1,0 +1,26 @@
+{{ eventIcon }} **{{ eventType }}**
+
+{% if username %}
+**Username:** {{ username }}
+
+{% endif %}
+{% if name %}
+**Name:** {{ name }}
+
+{% endif %}
+{% if email %}
+**Email:** {{ email }}
+
+{% endif %}
+{% if locale %}
+**Locale:** {{ locale }}
+
+{% endif %}
+{% if httpRequest %}
+**Request:** {{ httpRequest.method or "N/A" }} {{ httpRequest.path or "N/A" }}
+
+{% endif %}
+{% if ipAddress %}
+**IP Address:** {{ ipAddress }}
+
+{% endif %}

@@ -1,0 +1,12 @@
+🚨 **Violation Detected**
+
+**User:** {{user.displayName}} (@{{user.username}})
+**Rule:** {{rule.name}} ({{rule.type}})
+**Severity:** {{violation.severity}}
+
+{% if violation.details %}
+  **Details:** {{ violation.details | json }}
+{% endif %}
+
+**Timestamp:** {{ timestamp }}
+

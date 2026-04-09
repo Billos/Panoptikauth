@@ -1,0 +1,13 @@
+📱 **New Device Detected**
+
+**User:** {{user.displayName}} (@{{user.username}})
+
+**Device:** {{device.name}}
+
+**Platform:** {{device.platform}}
+
+{% if location %}
+**Location:** {{ location }}
+{% endif %}
+
+**Timestamp:** {{ timestamp }}

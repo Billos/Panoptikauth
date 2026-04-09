@@ -1,0 +1,27 @@
+▶️ **Stream Started**
+
+**User** {{user.displayName}} (@{{user.username}})
+
+**Media:** {{media.title}} ({{media.type}})
+
+{% if media.subtitle %}
+**Episode:** {{media.subtitle}}
+{% endif %}
+
+{% if media.year %}
+**Year:** {{media.year}}
+{% endif %}
+
+**Playback:** {{playback.type}}
+
+{% if playback.quality %}
+**Quality:** {{playback.quality}}
+{% endif %} 
+
+{% if playback.player %}
+**Player:** {{playback.player}}
+{% endif %} 
+
+**Location:** {{ location  }}
+
+**Timestamp:** {{ timestamp }}

@@ -1,0 +1,17 @@
+
+⏹️ **Stream Stopped**
+
+**User:** {{user.displayName}} (@{{user.username}})
+**Media:** {{media.title}}
+
+{% if media.subtitle %}
+**Episode:** {{media.subtitle}}
+{% endif %} 
+
+**Type:** {{media.type}}
+
+{% if session.durationMs %}
+**Duration:** {{ (session.durationMs / 60000) | floor }} minutes
+{% endif %} 
+
+**Timestamp:** {{ timestamp }}

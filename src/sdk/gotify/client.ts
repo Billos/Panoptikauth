@@ -12,7 +12,7 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
     const res = await fetch(`${BASE_URL}${path}`, {
       headers: {
         "Content-Type": "application/json",
-        // "X-Gotify-Key": (process.env.GOTIFY_WUD_APP_TOKEN as string) || "",
+        "X-Gotify-Key": (process.env.GOTIFY_WUD_APP_TOKEN as string) || "",
         ...(options?.headers || {}),
       },
       ...options,
@@ -23,7 +23,14 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
 
       throw new Error(`HTTP ${res.status}: ${text}`)
     }
-    return res.json()
+    try {
+      return res.json()
+    } catch (error) {
+      console.error(`Failed to parse JSON from ${BASE_URL}${path}:`, error)
+      const text = await res.text()
+      console.log("Response text:", text)
+      throw new Error(`Failed to parse JSON from ${BASE_URL}${path}: ${text}`)
+    }
   } catch (error) {
     console.error(`Failed to fetch ${BASE_URL}${path}:`, error)
   }
@@ -33,4 +40,4 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
 const appId = process.env.GOTIFY_WUD_APP_ID
 export const getApplicationMessages = () => request<Paging<Message>>(`application/${appId}/message?token=${USER_TOKEN}`)
 
-export const deleteMessage = (id: number) => request(`message/${id}?token=${USER_TOKEN}`, { method: "delete" })
+export const deleteMessage = (id: number) => request(`message/${id}`, { method: "delete" })

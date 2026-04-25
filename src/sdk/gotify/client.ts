@@ -12,7 +12,7 @@ async function request<T>(path: string, options?: RequestInit, userToken?: strin
     const res = await fetch(`${BASE_URL}${path}`, {
       headers: {
         "Content-Type": "application/json",
-        "X-Gotify-Key": userToken ?? (process.env.GOTIFY_WUD_APP_TOKEN as string),
+        ...(userToken ? {} : { "X-Gotify-Key": process.env.GOTIFY_WUD_APP_TOKEN as string }),
         ...(options?.headers || {}),
       },
       ...options,

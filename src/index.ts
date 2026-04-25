@@ -9,9 +9,12 @@ import { handleAuthentikWebhook } from "./controllers/authentik"
 import { handleHealthCheck } from "./controllers/health"
 import { handleSlackRequest } from "./controllers/slack"
 import { handleTracearrRequest } from "./controllers/tracearr"
+import { handleWudWebhook } from "./controllers/wud"
 import { gotifyParameters } from "./middleware/gotifyParameters"
 import { gotifySend } from "./middleware/gotifySend"
 import { logBody } from "./middleware/logBody"
+import { wudGotifySend } from "./middleware/wudGotifySend"
+import { startWudPoller } from "./wudPoller"
 
 const app = express()
 
@@ -26,6 +29,7 @@ app.get("/health", handleHealthCheck)
 app.post("/authentik", logBody, gotifyParameters, handleAuthentikWebhook, gotifySend)
 app.post("/slack", logBody, gotifyParameters, handleSlackRequest, gotifySend)
 app.post("/tracearr", logBody, gotifyParameters, handleTracearrRequest, gotifySend)
+app.post("/wud", logBody, gotifyParameters, handleWudWebhook, wudGotifySend)
 
 /**
  * Send notification to Gotify using multipart/form-data
@@ -39,8 +43,10 @@ function main(): void {
     console.log(`Webhook endpoint: http://localhost:${PORT}/webhook`)
     console.log(`Slack endpoint: http://localhost:${PORT}/slack`)
     console.log(`Tracearr endpoint: http://localhost:${PORT}/tracearr`)
+    console.log(`WUD endpoint: http://localhost:${PORT}/wud`)
     console.log(`Health check: http://localhost:${PORT}/health`)
   })
+  startWudPoller()
 }
 
 main()

@@ -1,3 +1,10 @@
+## [2.5.9](https://github.com/Billos/Panoptikauth/compare/2.5.8...2.5.9) (2026-04-25)
+
+
+### Bug Fixes
+
+* try catch request ([058565c](https://github.com/Billos/Panoptikauth/commit/058565ce240a0fd7d7d20862d42456ce194b8920))
+
 ## [2.5.8](https://github.com/Billos/Panoptikauth/compare/2.5.7...2.5.8) (2026-04-25)
 
 

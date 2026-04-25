@@ -4,7 +4,7 @@ import { deleteMessage, getApplicationMessages } from "../sdk/gotify/client"
 import { getContainers } from "../sdk/wud/client"
 import { FormattedEvent } from "../types/gotify"
 
-export async function handleWudRequest(req: Request<{}, {}, {}>, res: Response<{}, { data: FormattedEvent }>) {
+export async function handleWudRequest(_req: Request<{}, {}, {}>, res: Response<{}, { data: FormattedEvent }>) {
   console.log("=")
 
   const appMessages = await getApplicationMessages()

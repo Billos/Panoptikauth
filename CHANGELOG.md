@@ -1,3 +1,11 @@
+## [2.5.2](https://github.com/Billos/Panoptikauth/compare/2.5.1...2.5.2) (2026-04-25)
+
+
+### Bug Fixes
+
+* handle error ([eeca76d](https://github.com/Billos/Panoptikauth/commit/eeca76d5944f669bab9a383ae475497a88c2af4b))
+* handle error ([6eeacf6](https://github.com/Billos/Panoptikauth/commit/6eeacf69d8f1bf331905ed67c5c8c58382f70c70))
+
 ## [2.5.1](https://github.com/Billos/Panoptikauth/compare/2.5.0...2.5.1) (2026-04-25)
 
 

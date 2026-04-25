@@ -6,13 +6,13 @@ import { Message, Paging } from "./types"
 const BASE_URL = `${process.env.GOTIFY_URL}/`
 const USER_TOKEN = process.env.GOTIFY_WUD_USER_TOKEN
 
-async function request<T>(path: string, options?: RequestInit, userToken?: string): Promise<T> {
-  console.log(`Requesting ${BASE_URL}${path} with options:`, options, `and user token: ${userToken ?? "none"}`)
+async function request<T>(path: string, options?: RequestInit): Promise<T> {
+  console.log(`Requesting ${BASE_URL}${path} with options:`, options)
   try {
     const res = await fetch(`${BASE_URL}${path}`, {
       headers: {
         "Content-Type": "application/json",
-        ...(userToken ? {} : { "X-Gotify-Key": process.env.GOTIFY_WUD_APP_TOKEN as string }),
+        "X-Gotify-Key": (process.env.GOTIFY_WUD_APP_TOKEN as string) || "",
         ...(options?.headers || {}),
       },
       ...options,
@@ -31,6 +31,6 @@ async function request<T>(path: string, options?: RequestInit, userToken?: strin
 }
 
 const appId = process.env.GOTIFY_WUD_APP_ID
-export const getApplicationMessages = () => request<Paging<Message>>(`application/${appId}/message?token=${USER_TOKEN}`, {}, USER_TOKEN)
+export const getApplicationMessages = () => request<Paging<Message>>(`application/${appId}/message?token=${USER_TOKEN}`, {})
 
 export const deleteMessage = (id: number) => request(`message/${id}`, { method: "delete" })

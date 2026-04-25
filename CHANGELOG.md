@@ -1,3 +1,10 @@
+## [2.5.8](https://github.com/Billos/Panoptikauth/compare/2.5.7...2.5.8) (2026-04-25)
+
+
+### Bug Fixes
+
+* log ([c8d993b](https://github.com/Billos/Panoptikauth/commit/c8d993b1cea3b6766314aa4bf73b2e62bfeb2002))
+
 ## [2.5.7](https://github.com/Billos/Panoptikauth/compare/2.5.6...2.5.7) (2026-04-25)
 
 

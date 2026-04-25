@@ -1,3 +1,10 @@
+## [2.5.1](https://github.com/Billos/Panoptikauth/compare/2.5.0...2.5.1) (2026-04-25)
+
+
+### Bug Fixes
+
+* print handle error ([481d1e8](https://github.com/Billos/Panoptikauth/commit/481d1e824f41f95414c753adbfc785486f471385))
+
 # [2.5.0](https://github.com/Billos/Panoptikauth/compare/2.4.1...2.5.0) (2026-04-25)
 
 

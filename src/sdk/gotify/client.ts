@@ -8,23 +8,25 @@ const USER_TOKEN = process.env.GOTIFY_WUD_USER_TOKEN
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   console.log(`Requesting ${BASE_URL}${path} with options:`, options)
-  const res = await fetch(`${BASE_URL}${path}`, {
-    headers: {
-      "Content-Type": "application/json",
-      "X-Gotify-Key": process.env.GOTIFY_WUD_APP_TOKEN as string,
-      ...(options?.headers || {}),
-    },
-    ...options,
-  })
+  try {
+    const res = await fetch(`${BASE_URL}${path}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "X-Gotify-Key": process.env.GOTIFY_WUD_APP_TOKEN as string,
+        ...(options?.headers || {}),
+      },
+      ...options,
+    })
+    if (!res.ok) {
+      const text = await res.text()
+      console.log("Response not OK:", res.status, text)
 
-  if (!res.ok) {
-    const text = await res.text()
-    console.log("Response not OK:", res.status, text)
-
-    throw new Error(`HTTP ${res.status}: ${text}`)
+      throw new Error(`HTTP ${res.status}: ${text}`)
+    }
+    return res.json()
+  } catch (error) {
+    console.error(`Failed to fetch ${BASE_URL}${path}:`, error)
   }
-
-  return res.json()
 }
 
 const appId = process.env.GOTIFY_WUD_APP_ID

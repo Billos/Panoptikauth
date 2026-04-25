@@ -5,8 +5,6 @@ import { getContainers } from "../sdk/wud/client"
 import { FormattedEvent } from "../types/gotify"
 
 export async function handleWudRequest(_req: Request<{}, {}, {}>, res: Response<{}, { data: FormattedEvent }>) {
-  console.log("=")
-
   const appMessages = await getApplicationMessages()
   const containers = await getContainers()
   const upToDateContainers = containers.filter((c) => !c.updateAvailable)

@@ -1,3 +1,10 @@
+## [2.5.5](https://github.com/Billos/Panoptikauth/compare/2.5.4...2.5.5) (2026-04-25)
+
+
+### Bug Fixes
+
+* hangle error ([16b9b3d](https://github.com/Billos/Panoptikauth/commit/16b9b3d517edeb2452f7a42287fdbba4cfc7efd1))
+
 ## [2.5.4](https://github.com/Billos/Panoptikauth/compare/2.5.3...2.5.4) (2026-04-25)
 
 

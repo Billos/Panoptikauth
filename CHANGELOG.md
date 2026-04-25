@@ -1,6 +1,18 @@
 # [2.5.0](https://github.com/Billos/Panoptikauth/compare/2.4.1...2.5.0) (2026-04-25)
 
 
+### Bug Fixes
+
+* build failed ([93e5b5b](https://github.com/Billos/Panoptikauth/commit/93e5b5b4326c1cd013c99b14eb78f6528a570f09))
+
+
+### Features
+
+* Clean up stale Gotify notifications for updated containers ([b0c7fbd](https://github.com/Billos/Panoptikauth/commit/b0c7fbdd1e228b8de0359d58be10c2a929c1a7c2))
+
+# [2.5.0](https://github.com/Billos/Panoptikauth/compare/2.4.1...2.5.0) (2026-04-25)
+
+
 ### Features
 
 * Clean up stale Gotify notifications for updated containers ([b0c7fbd](https://github.com/Billos/Panoptikauth/commit/b0c7fbdd1e228b8de0359d58be10c2a929c1a7c2))

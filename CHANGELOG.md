@@ -1,3 +1,10 @@
+## [2.5.6](https://github.com/Billos/Panoptikauth/compare/2.5.5...2.5.6) (2026-04-25)
+
+
+### Bug Fixes
+
+* review ([70d55a0](https://github.com/Billos/Panoptikauth/commit/70d55a031ec75dd689b1f1124272648e454aff0a))
+
 ## [2.5.5](https://github.com/Billos/Panoptikauth/compare/2.5.4...2.5.5) (2026-04-25)
 
 

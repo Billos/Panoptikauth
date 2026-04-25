@@ -40,4 +40,4 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
 const appId = process.env.GOTIFY_WUD_APP_ID
 export const getApplicationMessages = () => request<Paging<Message>>(`application/${appId}/message?token=${USER_TOKEN}`)
 
-export const deleteMessage = (id: number) => request(`message/${id}`, { method: "delete" })
+export const deleteMessage = (id: number) => request(`message/${id}?token=${USER_TOKEN}`, { method: "delete" })

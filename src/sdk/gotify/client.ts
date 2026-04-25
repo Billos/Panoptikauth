@@ -27,6 +27,7 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
   } catch (error) {
     console.error(`Failed to fetch ${BASE_URL}${path}:`, error)
   }
+  throw new Error(`Failed to fetch ${BASE_URL}${path}`)
 }
 
 const appId = process.env.GOTIFY_WUD_APP_ID

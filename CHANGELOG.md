@@ -1,3 +1,10 @@
+## [2.5.10](https://github.com/Billos/Panoptikauth/compare/2.5.9...2.5.10) (2026-04-25)
+
+
+### Bug Fixes
+
+* user token no matter what ([c48f58a](https://github.com/Billos/Panoptikauth/commit/c48f58a4bc1bd321b3fcdadd58cfff4d0f30f499))
+
 ## [2.5.9](https://github.com/Billos/Panoptikauth/compare/2.5.8...2.5.9) (2026-04-25)
 
 

@@ -9,6 +9,7 @@ import { handleAuthentikWebhook } from "./controllers/authentik"
 import { handleHealthCheck } from "./controllers/health"
 import { handleSlackRequest } from "./controllers/slack"
 import { handleTracearrRequest } from "./controllers/tracearr"
+import { handleWudRequest } from "./controllers/wud"
 import { gotifyParameters } from "./middleware/gotifyParameters"
 import { gotifySend } from "./middleware/gotifySend"
 import { logBody } from "./middleware/logBody"
@@ -26,6 +27,7 @@ app.get("/health", handleHealthCheck)
 app.post("/authentik", logBody, gotifyParameters, handleAuthentikWebhook, gotifySend)
 app.post("/slack", logBody, gotifyParameters, handleSlackRequest, gotifySend)
 app.post("/tracearr", logBody, gotifyParameters, handleTracearrRequest, gotifySend)
+app.get("/wud", logBody, handleWudRequest)
 
 /**
  * Send notification to Gotify using multipart/form-data

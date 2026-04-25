@@ -1,3 +1,10 @@
+## [2.5.7](https://github.com/Billos/Panoptikauth/compare/2.5.6...2.5.7) (2026-04-25)
+
+
+### Bug Fixes
+
+* simplify usertoken ([ccd232e](https://github.com/Billos/Panoptikauth/commit/ccd232e8e37c5703e50a843824c420e8d9159145))
+
 ## [2.5.6](https://github.com/Billos/Panoptikauth/compare/2.5.5...2.5.6) (2026-04-25)
 
 

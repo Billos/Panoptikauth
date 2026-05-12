@@ -1,3 +1,10 @@
+## [2.5.11](https://github.com/Billos/Panoptikauth/compare/2.5.10...2.5.11) (2026-05-12)
+
+
+### Bug Fixes
+
+* yarn 4 ([d522e28](https://github.com/Billos/Panoptikauth/commit/d522e28e68c8141caff7f6535c83aaf689282198))
+
 ## [2.5.10](https://github.com/Billos/Panoptikauth/compare/2.5.9...2.5.10) (2026-04-25)
 
 

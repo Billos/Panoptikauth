@@ -1,17 +1,24 @@
-# Use an official Node.js runtime as a parent image
-FROM node:25.2-alpine AS builder
-
+FROM node:26.1-alpine AS base
 WORKDIR /app
+RUN npm install -g corepack
+RUN corepack enable
+
+FROM base AS builder
 COPY . .
 RUN yarn 
 RUN yarn build
 
 # Final production image
-FROM node:25.2-alpine AS runtime
+FROM base AS runtime
 WORKDIR /app
 
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile --production --ignore-scripts && yarn cache clean
+COPY ./package.json ./package.json
+COPY ./yarn.lock ./yarn.lock
+COPY .yarnrc.yml ./.yarnrc.yml
+COPY tsconfig.json ./tsconfig.json
+COPY .yarn ./.yarn
+
+RUN yarn workspaces focus --all --production
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/templates ./templates
 

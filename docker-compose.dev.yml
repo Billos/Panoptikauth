@@ -13,3 +13,9 @@ services:
       - NODE_ENV=development
     volumes:
       - .:/app
+    depends_on:
+      - redis
+  redis:
+    image: redis:7-alpine
+    container_name: panoptikauth-redis-dev
+    restart: unless-stopped

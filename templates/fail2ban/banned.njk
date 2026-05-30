@@ -1,0 +1,5 @@
+🚫 **Banned IPs**
+
+{% for entry in entries %}
+- **{{ entry.ip }}**{% if entry.jail %} (jail: {{ entry.jail }}){% endif %} — {{ entry.bannedAt }}
+{% endfor %}

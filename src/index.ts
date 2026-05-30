@@ -4,6 +4,7 @@
  */
 
 import express from "express"
+import rateLimit from "express-rate-limit"
 
 import { handleAuthentikWebhook } from "./controllers/authentik"
 import { handleFail2banBan } from "./controllers/fail2ban"
@@ -20,6 +21,14 @@ const app = express()
 // Configuration from environment variables
 const PORT = process.env.PORT || 3000
 
+// Rate limiter for fail2ban endpoint: max 60 requests per minute per IP
+const fail2banLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 60,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+})
+
 // Middleware to parse text/json content type
 app.use(express.json())
 
@@ -28,7 +37,7 @@ app.get("/health", handleHealthCheck)
 app.post("/authentik", logBody, gotifyParameters, handleAuthentikWebhook, gotifySend)
 app.post("/slack", logBody, gotifyParameters, handleSlackRequest, gotifySend)
 app.post("/tracearr", logBody, gotifyParameters, handleTracearrRequest, gotifySend)
-app.post("/fail2ban", logBody, handleFail2banBan)
+app.post("/fail2ban", fail2banLimiter, logBody, handleFail2banBan)
 
 /**
  * Send notification to Gotify using multipart/form-data

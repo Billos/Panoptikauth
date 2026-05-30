@@ -51,11 +51,6 @@ export function startFail2banCron(): void {
 
     console.log("fail2ban cron: sending notification for %d banned IP(s)", entries.length)
 
-    if (!GOTIFY_URL || !GOTIFY_TOKEN) {
-      console.warn("fail2ban cron: skipping notification, Gotify credentials not configured")
-      return
-    }
-
     try {
       const gotify = new Gotify({ url: GOTIFY_URL, token: GOTIFY_TOKEN })
       const { title, message, priority } = formatFail2banBans(entries)

@@ -2,15 +2,19 @@ import { Queue, Worker } from "bullmq"
 
 import { Gotify } from "../gotify"
 import { getRedis } from "../redis"
+import { Fail2banPayload } from "../types/fail2ban"
 
 const FAIL2BAN_SET_KEY = "fail2ban:unnotified"
 const QUEUE_NAME = "fail2ban-notify"
 
-type Fail2banEntry = {
-  ip: string
-  jail: string
-  timestamp: string
-}
+// Lua script to atomically pop all entries from the list
+const ATOMIC_POP_ALL = `
+local entries = redis.call('lrange', KEYS[1], 0, -1)
+if #entries > 0 then
+  redis.call('del', KEYS[1])
+end
+return entries
+`
 
 export function startFail2banWorker(): void {
   const connection = getRedis()
@@ -30,17 +34,16 @@ export function startFail2banWorker(): void {
     QUEUE_NAME,
     async () => {
       const redis = getRedis()
-      const entries: string[] = await redis.lrange(FAIL2BAN_SET_KEY, 0, -1)
 
-      if (entries.length === 0) {
+      // Atomically fetch and delete all entries using Lua script
+      const entries = (await redis.eval(ATOMIC_POP_ALL, 1, FAIL2BAN_SET_KEY)) as string[]
+
+      if (!entries || entries.length === 0) {
         console.log("[fail2ban] No unnotified IPs to process")
         return
       }
 
-      // Remove all entries atomically
-      await redis.del(FAIL2BAN_SET_KEY)
-
-      const parsed: Fail2banEntry[] = entries.map((e) => JSON.parse(e) as Fail2banEntry)
+      const parsed: Required<Fail2banPayload>[] = entries.map((e) => JSON.parse(e) as Required<Fail2banPayload>)
 
       const title = `🚫 Fail2ban: ${parsed.length} IP(s) banned`
       const message = parsed

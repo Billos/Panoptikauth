@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/Billos/Panoptikauth/compare/2.6.1...2.7.0) (2026-06-07)
+
+
+### Features
+
+* Include more context in ban notifications ([4f17a46](https://github.com/Billos/Panoptikauth/commit/4f17a468feea0ab035aa8babefed400c42bd4bb1))
+
 ## [2.6.1](https://github.com/Billos/Panoptikauth/compare/2.6.0...2.6.1) (2026-06-07)
 
 

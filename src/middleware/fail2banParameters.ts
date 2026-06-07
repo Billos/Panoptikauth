@@ -6,7 +6,7 @@ const Fail2BanQuerySchema = z.object({
   time: z.string(),
   message: z.string(),
   jail: z.string().optional(),
-  timestamp: z.string(),
+  timestamp: z.string().optional(),
   failures: z.string().optional(),
 })
 

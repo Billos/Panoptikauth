@@ -14,6 +14,9 @@ export async function handleFail2BanRequest(req: Request<{}, {}, Fail2BanBody>, 
   if (!ip) {
     return res.status(400).json({ error: "Missing required field: ip" })
   }
+  if (!timestamp) {
+    req.body.timestamp = new Date().toISOString()
+  }
 
   try {
     const redis = getRedis()

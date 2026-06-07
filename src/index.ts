@@ -10,9 +10,12 @@ import { handleHealthCheck } from "./controllers/health"
 import { handleSlackRequest } from "./controllers/slack"
 import { handleTracearrRequest } from "./controllers/tracearr"
 import { handleWudRequest } from "./controllers/wud"
+import { handleFail2BanRequest } from "./fail2ban"
+import { fail2BanParameters } from "./middleware/fail2banParameters"
 import { gotifyParameters } from "./middleware/gotifyParameters"
 import { gotifySend } from "./middleware/gotifySend"
 import { logBody } from "./middleware/logBody"
+import { startFail2banWorker } from "./workers/fail2ban"
 
 const app = express()
 
@@ -28,6 +31,7 @@ app.post("/authentik", logBody, gotifyParameters, handleAuthentikWebhook, gotify
 app.post("/slack", logBody, gotifyParameters, handleSlackRequest, gotifySend)
 app.post("/tracearr", logBody, gotifyParameters, handleTracearrRequest, gotifySend)
 app.get("/wud", logBody, handleWudRequest)
+app.post("/fail2ban", logBody, fail2BanParameters, handleFail2BanRequest)
 
 /**
  * Send notification to Gotify using multipart/form-data
@@ -43,6 +47,8 @@ function main(): void {
     console.log(`Tracearr endpoint: http://localhost:${PORT}/tracearr`)
     console.log(`Health check: http://localhost:${PORT}/health`)
   })
+
+  void startFail2banWorker()
 }
 
 main()

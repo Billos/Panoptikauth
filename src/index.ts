@@ -15,6 +15,7 @@ import { fail2BanParameters } from "./middleware/fail2banParameters"
 import { gotifyParameters } from "./middleware/gotifyParameters"
 import { gotifySend } from "./middleware/gotifySend"
 import { logBody } from "./middleware/logBody"
+import { startFail2banWorker } from "./workers/fail2ban"
 
 const app = express()
 
@@ -46,6 +47,8 @@ function main(): void {
     console.log(`Tracearr endpoint: http://localhost:${PORT}/tracearr`)
     console.log(`Health check: http://localhost:${PORT}/health`)
   })
+
+  void startFail2banWorker()
 }
 
 main()

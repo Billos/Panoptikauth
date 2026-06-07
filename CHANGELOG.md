@@ -1,3 +1,10 @@
+## [2.7.1](https://github.com/Billos/Panoptikauth/compare/2.7.0...2.7.1) (2026-06-07)
+
+
+### Bug Fixes
+
+* timestamp is optionnal ([9d843fe](https://github.com/Billos/Panoptikauth/commit/9d843fea049af87be84b2b9edfd54dd8870d1c77))
+
 # [2.7.0](https://github.com/Billos/Panoptikauth/compare/2.6.1...2.7.0) (2026-06-07)
 
 

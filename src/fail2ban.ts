@@ -7,18 +7,17 @@ export const FAIL2BAN_SET_KEY = "fail2ban:unnotified"
 
 export async function handleFail2BanRequest(req: Request<{}, {}, Fail2BanBody>, res: Response) {
   console.log("Handling Fail2Ban request")
-  const { ip, time } = req.body
+  const { ip, time, jail, timestamp, failures } = req.body
 
-  console.log(`Received Fail2Ban notification for IP ${ip} at time ${time}`)
+  console.log(`Received Fail2Ban notification for IP ${ip} at time ${time}, jail: ${jail}, timestamp: ${timestamp}, failures: ${failures}`)
 
   if (!ip) {
     return res.status(400).json({ error: "Missing required field: ip" })
   }
-  const timestamp = new Date().toISOString()
 
   try {
     const redis = getRedis()
-    const entry = JSON.stringify({ ip, timestamp, time })
+    const entry = JSON.stringify(req.body)
     await redis.rpush(FAIL2BAN_SET_KEY, entry)
     console.log(`[fail2ban] Stored banned IP: ${ip} (time: ${time})`)
     return res.status(200).json({ status: "ok", service: "panoptikauth", message: "IP stored for notification" })

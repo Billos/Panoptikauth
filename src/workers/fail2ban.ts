@@ -30,7 +30,12 @@ export function startFail2banWorker(): void {
       const parsed: Fail2BanBody[] = entries.map((e) => JSON.parse(e) as Fail2BanBody)
 
       const title = `🚫 Fail2ban: ${parsed.length} IP(s) banned`
-      const message = parsed.map((entry) => `- **${entry.ip}** banned ${entry.time}`).join("\n")
+      const message = parsed
+        .map(
+          (entry) =>
+            `- **${entry.ip}** banned ${entry.time} (jail: ${entry.jail}, timestamp: ${entry.timestamp}, failures: ${entry.failures})`,
+        )
+        .join("\n")
 
       const gotifyUrl = process.env.GOTIFY_URL
       const gotifyToken = process.env.GOTIFY_FAIL2BAN_APP_TOKEN

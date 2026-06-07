@@ -5,6 +5,9 @@ const Fail2BanQuerySchema = z.object({
   ip: z.string(),
   time: z.string(),
   message: z.string(),
+  jail: z.string().optional(),
+  timestamp: z.string(),
+  failures: z.string().optional(),
 })
 
 export type Fail2BanBody = z.infer<typeof Fail2BanQuerySchema>

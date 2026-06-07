@@ -1,3 +1,10 @@
+## [2.6.1](https://github.com/Billos/Panoptikauth/compare/2.6.0...2.6.1) (2026-06-07)
+
+
+### Bug Fixes
+
+* ignore yarn for prettier ([469aee7](https://github.com/Billos/Panoptikauth/commit/469aee7c95dca18974efd1094f76bde890def176))
+
 # [2.6.0](https://github.com/Billos/Panoptikauth/compare/2.5.11...2.6.0) (2026-06-07)
 
 

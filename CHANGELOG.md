@@ -1,3 +1,11 @@
+# [2.6.0](https://github.com/Billos/Panoptikauth/compare/2.5.11...2.6.0) (2026-06-07)
+
+
+### Features
+
+* Add Fail2Ban webhook endpoint to store banned IPs ([8b3bc3a](https://github.com/Billos/Panoptikauth/commit/8b3bc3a47c04fe8d3130d7a4d6bde045bc9c1a78))
+* Add scheduled worker for aggregated notifications ([1e98322](https://github.com/Billos/Panoptikauth/commit/1e98322a3ba0a47c7e3e5dcaf67f0a111f8eb6fc))
+
 ## [2.5.11](https://github.com/Billos/Panoptikauth/compare/2.5.10...2.5.11) (2026-05-12)
 
 

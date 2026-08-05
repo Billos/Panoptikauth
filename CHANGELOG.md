@@ -1,3 +1,10 @@
+# [2.8.0](https://github.com/Billos/Panoptikauth/compare/2.7.1...2.8.0) (2026-08-05)
+
+
+### Features
+
+* Add POST /portainer webhook endpoint for Portainer alerting ([#24](https://github.com/Billos/Panoptikauth/issues/24)) ([84d5e7f](https://github.com/Billos/Panoptikauth/commit/84d5e7f7d8307f734a2a78fd271e0fc3fee4a29c))
+
 ## [2.7.1](https://github.com/Billos/Panoptikauth/compare/2.7.0...2.7.1) (2026-06-07)
 
 

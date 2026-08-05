@@ -1,0 +1,25 @@
+{{ icon }} **Portainer Alert {{ statusLabel }}**
+
+{% for alert in alerts %}
+**{{ alert.name }}**{% if alert.severity %} ({{ alert.severity }}){% endif %}
+
+{% if alert.summary %}
+**Summary:** {{ alert.summary }}
+{% endif %}
+{% if alert.description %}
+**Description:** {{ alert.description }}
+{% endif %}
+{% if alert.instance %}
+**Instance:** {{ alert.instance }}
+{% endif %}
+{% if alert.startsAt %}
+**Started:** {{ alert.startsAt }}
+{% endif %}
+{% if alert.generatorURL %}
+**Source:** {{ alert.generatorURL }}
+{% endif %}
+
+{% endfor %}
+{% if externalURL %}
+**Portainer:** {{ externalURL }}
+{% endif %}

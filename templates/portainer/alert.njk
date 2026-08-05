@@ -12,8 +12,12 @@
 {% if alert.instance %}
 **Instance:** {{ alert.instance }}
 {% endif %}
-{% if alert.startsAt %}
-**Started:** {{ alert.startsAt }}
+{% if alert.timestamp %}
+{% if alert.firing %}
+**Started:** {{ alert.timestamp }}
+{% else %}
+**Resolved:** {{ alert.timestamp }}
+{% endif %}
 {% endif %}
 {% if alert.generatorURL %}
 **Source:** {{ alert.generatorURL }}

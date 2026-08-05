@@ -23,7 +23,8 @@ function mapAlert(alert: PortainerAlert) {
     instance: alert.labels?.instance,
     summary: alert.annotations?.summary,
     description: alert.annotations?.description,
-    startsAt: alert.status === "firing" ? formatTimestamp(alert.startsAt) : formatTimestamp(alert.endsAt),
+    timestamp: alert.status === "firing" ? formatTimestamp(alert.startsAt) : formatTimestamp(alert.endsAt),
+    firing: alert.status === "firing",
     generatorURL: alert.generatorURL,
   }
 }

@@ -1,3 +1,16 @@
+# [2.9.0](https://github.com/Billos/Panoptikauth/compare/2.8.0...2.9.0) (2026-09-20)
+
+
+### Bug Fixes
+
+* Quick yarn lock update ([311a2df](https://github.com/Billos/Panoptikauth/commit/311a2dfaf89265525df799f384ddc67d512f0797))
+* update yarn ([dfee4d4](https://github.com/Billos/Panoptikauth/commit/dfee4d4704eed2aaec809cdc2414cd4a30500966))
+
+
+### Features
+
+* Add PanoptikAuth token to WUD client requests ([7644324](https://github.com/Billos/Panoptikauth/commit/764432405bf0f016f7adf0568293f06274f6bbc2))
+
 # [2.8.0](https://github.com/Billos/Panoptikauth/compare/2.7.1...2.8.0) (2026-08-05)
 
 

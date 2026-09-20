@@ -6,6 +6,7 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.PANOPTIKAUTH_TOKEN}`,
       ...(options?.headers || {}),
     },
     ...options,

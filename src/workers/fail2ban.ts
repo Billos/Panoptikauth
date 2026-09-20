@@ -1,6 +1,6 @@
 import { Queue, Worker } from "bullmq"
 
-import { getRedis } from "../controllers/redis"
+import { getBullMQRedis, getRedis } from "../controllers/redis"
 import { FAIL2BAN_SET_KEY } from "../fail2ban"
 import { Gotify } from "../gotify"
 import { Fail2BanBody } from "../middleware/fail2banParameters"
@@ -8,8 +8,7 @@ import { Fail2BanBody } from "../middleware/fail2banParameters"
 const QUEUE_NAME = "fail2ban-notify"
 
 export function startFail2banWorker(): void {
-  const connection = getRedis()
-  const queue = new Queue(QUEUE_NAME, { connection })
+  const queue = new Queue(QUEUE_NAME, { connection: getBullMQRedis() })
 
   const pattern = process.env.FAIL2BAN_WORKER_CRON || "*/5 * * * *"
   queue.upsertJobScheduler("fail2ban-cron", { pattern }, { name: "fail2ban-batch-notify" })
@@ -51,7 +50,7 @@ export function startFail2banWorker(): void {
 
       await redis.del(FAIL2BAN_SET_KEY)
     },
-    { connection },
+    { connection: getBullMQRedis() },
   )
 
   worker.on("failed", (job, err) => {
